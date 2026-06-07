@@ -55,6 +55,11 @@ class SheetsWriter:
     #  Public API                                                          #
     # ------------------------------------------------------------------ #
 
+    def get_published_count(self) -> int:
+        ws = self.sheet.worksheet(TAB_FEED)
+        records = ws.get_all_records()
+        return len([r for r in records if r.get("Status") == "published"])
+
     def get_recent_posts(self, n: int = 10) -> list:
         """
         Returns list of dicts (newest first) with keys: topic, format, timestamp.

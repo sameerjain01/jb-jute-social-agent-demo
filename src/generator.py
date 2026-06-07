@@ -62,30 +62,37 @@ class ContentGenerator:
         return response.choices[0].message.content.strip()
 
     def generate_infographic_data(self, topic: str, theme: str) -> dict:
-        prompt = f"""Create data for a bold social media infographic for {self.company['name']}.
+        prompt = f"""Create content for a split-panel social media infographic for {self.company['name']}.
 
 Topic: {topic}
 Environmental theme: {theme}
 
+The infographic shows two sides: LEFT = the problem (plastic/synthetic world), RIGHT = the solution (jute world).
+
 RULES:
-- The stat must be a single number/figure that is SHOCKING or surprising (e.g. "8M+" "400yrs" "88%")
-- Bullets must each contain a specific number or comparison — NO vague claims
-  BAD: "Jute is biodegradable"
-  GOOD: "Fully biodegrades in 1-2 years vs 400 years for plastic"
-  BAD: "Jute uses less water"
-  GOOD: "Uses 88% less water than cotton per kg"
-- CTA must be punchy, 5 words max, action-oriented
+- stat: ONE shocking number displayed very large (e.g. "8M+" "88%" "400yrs" "2Bn")
+- tagline: 2 short lines — first line names the crisis, second names the jute answer
+- bad_points: 3 specific damaging facts about plastic/synthetics related to the theme — include numbers
+- good_points: 3 specific jute benefits that directly counter each bad point — include numbers
+- cta: max 5 words, punchy, action-oriented
+- NO vague claims. Every point must be specific and visual.
 
 Return ONLY valid JSON:
 {{
-  "stat": "shocking single figure (e.g. '8M+' or '88%' or '400yrs')",
-  "stat_description": "one line — what this stat means, max 8 words",
-  "bullets": [
-    "specific stat-backed fact, max 10 words",
-    "specific stat-backed fact, max 10 words",
-    "specific stat-backed fact, max 10 words"
+  "stat": "one shocking figure",
+  "stat_description": "what this stat means, max 8 words",
+  "tagline": "line 1 — the crisis\\nline 2 — jute as the answer",
+  "bad_points": [
+    "specific damaging fact with number",
+    "specific damaging fact with number",
+    "specific damaging fact with number"
   ],
-  "cta": "punchy action phrase, max 5 words",
+  "good_points": [
+    "specific jute benefit with number",
+    "specific jute benefit with number",
+    "specific jute benefit with number"
+  ],
+  "cta": "punchy action phrase max 5 words",
   "hashtags": "#Tag1 #Tag2 #Tag3 #Tag4"
 }}"""
 

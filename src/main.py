@@ -118,7 +118,7 @@ def run():
             # --- Infographic (generate before publishing so URL goes into Feed row) ---
             img_url = ""
             try:
-                theme = next_theme(recent_posts)
+                theme = next_theme(sheets.get_published_count())
                 logger.info(f"Generating infographic | theme: {theme}")
                 infographic_data = generator.generate_infographic_data(topic, theme)
 
