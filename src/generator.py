@@ -39,7 +39,7 @@ Structure:
 
 
 class ContentGenerator:
-    MODEL = "gemini-2.0-flash"
+    MODEL = "gemini-2.0-flash-lite"
 
     def __init__(self, api_key: str, config: dict):
         genai.configure(api_key=api_key)
