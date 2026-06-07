@@ -1,12 +1,12 @@
 """
 generator.py
 ------------
-Calls Gemini to write a LinkedIn post given a topic and format type.
+Calls Groq to write a LinkedIn post given a topic and format type.
 Format types:  educate | pitch | cta
 """
 
 import logging
-import google.generativeai as genai
+from groq import Groq
 
 logger = logging.getLogger(__name__)
 
@@ -39,11 +39,10 @@ Structure:
 
 
 class ContentGenerator:
-    MODEL = "gemini-2.0-flash"
+    MODEL = "llama-3.3-70b-versatile"
 
     def __init__(self, api_key: str, config: dict):
-        genai.configure(api_key=api_key)
-        self.model = genai.GenerativeModel(self.MODEL)
+        self.client = Groq(api_key=api_key)
         self.company = config["company"]
         self.content_cfg = config["content"]
 
@@ -51,14 +50,13 @@ class ContentGenerator:
         prompt = self._build_prompt(topic, format_type)
         logger.debug(f"Prompt length: {len(prompt)} chars")
 
-        response = self.model.generate_content(
-            prompt,
-            generation_config=genai.types.GenerationConfig(
-                temperature=0.85,       # creative but not wild
-                max_output_tokens=600,
-            ),
+        response = self.client.chat.completions.create(
+            model=self.MODEL,
+            messages=[{"role": "user", "content": prompt}],
+            temperature=0.85,
+            max_tokens=600,
         )
-        return response.text.strip()
+        return response.choices[0].message.content.strip()
 
     def _build_prompt(self, topic: str, format_type: str) -> str:
         fmt_instruction = FORMAT_INSTRUCTIONS.get(format_type, FORMAT_INSTRUCTIONS["educate"])

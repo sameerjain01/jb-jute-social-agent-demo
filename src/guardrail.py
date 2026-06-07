@@ -1,16 +1,14 @@
 """
 guardrail.py
 ------------
-Second Gemini call that acts as an independent compliance judge.
+Second Groq call that acts as an independent compliance judge.
 Returns structured JSON: { pass, score, flags, reason }
-
-Completely separate from the generator — different prompt, different role.
 """
 
 import json
 import logging
 import re
-import google.generativeai as genai
+from groq import Groq
 
 logger = logging.getLogger(__name__)
 
@@ -37,12 +35,12 @@ SCORING (1–10):
 
 RESPOND WITH VALID JSON ONLY. No preamble, no markdown, no explanation outside the JSON.
 
-{
+{{
   "pass": true or false,
   "score": <integer 1-10>,
   "flags": ["list of specific issues found, empty if none"],
   "reason": "one sentence summary of your decision"
-}
+}}
 
 POST TO EVALUATE:
 ---
@@ -55,18 +53,13 @@ RECENT POST TOPICS (to detect near-duplicates):
 
 
 class GuardrailJudge:
-    MODEL = "gemini-2.0-flash"
+    MODEL = "llama-3.3-70b-versatile"
 
     def __init__(self, api_key: str, config: dict):
-        genai.configure(api_key=api_key)
-        self.model = genai.GenerativeModel(self.MODEL)
+        self.client = Groq(api_key=api_key)
         self.min_score = config["guardrail"]["min_pass_score"]
 
     def evaluate(self, post_content: str, recent_topics: list = None) -> dict:
-        """
-        Returns dict: { pass: bool, score: int, flags: list, reason: str }
-        Never raises — on any error, returns a safe fail result.
-        """
         recent_str = ", ".join(recent_topics) if recent_topics else "none"
 
         prompt = GUARDRAIL_PROMPT.format(
@@ -75,17 +68,15 @@ class GuardrailJudge:
         )
 
         try:
-            response = self.model.generate_content(
-                prompt,
-                generation_config=genai.types.GenerationConfig(
-                    temperature=0.1,        # low temp = consistent judgement
-                    max_output_tokens=300,
-                ),
+            response = self.client.chat.completions.create(
+                model=self.MODEL,
+                messages=[{"role": "user", "content": prompt}],
+                temperature=0.1,
+                max_tokens=300,
             )
-            raw = response.text.strip()
+            raw = response.choices[0].message.content.strip()
             result = self._parse_response(raw)
 
-            # Enforce minimum score threshold
             if result["pass"] and result["score"] < self.min_score:
                 result["pass"] = False
                 result["reason"] = (
@@ -105,13 +96,10 @@ class GuardrailJudge:
             }
 
     def _parse_response(self, raw: str) -> dict:
-        """Extract JSON from response, handling minor formatting issues."""
-        # Strip any accidental markdown fences
         clean = re.sub(r"```json|```", "", raw).strip()
 
         try:
             data = json.loads(clean)
-            # Validate expected keys exist
             return {
                 "pass": bool(data.get("pass", False)),
                 "score": int(data.get("score", 0)),

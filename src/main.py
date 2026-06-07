@@ -63,15 +63,15 @@ def run():
     logger.info(f"Loaded {len(topics)} topics from config")
 
     # --- Load secrets from environment ---
-    gemini_api_key       = get_env("GEMINI_API_KEY")
+    groq_api_key         = get_env("GROQ_API_KEY")
     google_credentials   = get_env("GOOGLE_CREDENTIALS_JSON")
     spreadsheet_id       = get_env("SPREADSHEET_ID")
 
     # --- Initialise components ---
     sheets    = SheetsWriter(google_credentials, spreadsheet_id)
     selector  = TopicSelector(topics, config)
-    generator = ContentGenerator(gemini_api_key, config)
-    guardrail = GuardrailJudge(gemini_api_key, config)
+    generator = ContentGenerator(groq_api_key, config)
+    guardrail = GuardrailJudge(groq_api_key, config)
 
     # --- Read history ---
     window = config["posting"]["min_similarity_window"]
