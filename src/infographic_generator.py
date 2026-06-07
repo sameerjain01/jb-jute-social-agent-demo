@@ -45,9 +45,9 @@ THEME_TAGLINES = {
 
 THEME_ORDER = ["ocean", "earth", "trees", "water"]
 
-FONT_BOLD    = "/usr/share/fonts/truetype/liberation2/LiberationSans-Bold.ttf"
-FONT_REGULAR = "/usr/share/fonts/truetype/liberation2/LiberationSans-Regular.ttf"
-FONT_ITALIC  = "/usr/share/fonts/truetype/liberation2/LiberationSans-BoldItalic.ttf"
+FONT_BOLD    = "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf"
+FONT_REGULAR = "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf"
+FONT_ITALIC  = "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf"
 
 
 def _font(path: str, size: int) -> ImageFont.FreeTypeFont:

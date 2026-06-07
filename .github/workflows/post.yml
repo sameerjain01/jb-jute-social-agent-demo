@@ -1,12 +1,9 @@
 name: 🌿 JuteVerde Social Agent
 
 on:
-  # ── Scheduled run: 9am UTC daily ──────────────────────────────────────
   schedule:
     - cron: "0 9 * * *"
 
-  # ── Manual trigger: the "Run workflow" button in GitHub Actions UI ─────
-  # Use this for live demos — click the button, watch it run in ~30 seconds
   workflow_dispatch:
     inputs:
       reason:
@@ -15,6 +12,9 @@ on:
         default: "Manual demo run"
         type: string
 
+permissions:
+  contents: write
+
 jobs:
   post:
     name: Generate & Publish Post
@@ -22,33 +22,24 @@ jobs:
     timeout-minutes: 10
 
     steps:
-      # 1. Check out the repo
       - name: Checkout repo
         uses: actions/checkout@v4.2.2
 
-      # 2. Set up Python
       - name: Set up Python 3.11
         uses: actions/setup-python@v5.6.0
         with:
           python-version: "3.11"
           cache: "pip"
 
-      # 3. Install fonts (needed for infographic rendering)
-      - name: Install fonts
-        run: sudo apt-get install -y fonts-liberation2
-
-      # 4. Install dependencies
       - name: Install dependencies
         run: pip install -r requirements.txt
 
-      # 4. Log the trigger reason (visible in GitHub Actions UI)
       - name: Log trigger info
         run: |
           echo "Trigger: ${{ github.event_name }}"
           echo "Reason: ${{ github.event.inputs.reason || 'Scheduled run' }}"
           echo "Time: $(date -u)"
 
-      # 5. Run the agent
       - name: Run Social Media Agent
         env:
           GROQ_API_KEY:            ${{ secrets.GROQ_API_KEY }}
@@ -56,11 +47,10 @@ jobs:
           SPREADSHEET_ID:          ${{ secrets.SPREADSHEET_ID }}
         run: python src/main.py
 
-      # 6. Commit the generated infographic back to the repo
       - name: Commit infographic
         run: |
           git config user.name "JuteVerde Agent"
           git config user.email "noreply@juteverde.com"
-          git add generated/*.png 2>/dev/null || true
+          git add generated/*.png
           git diff --cached --quiet || git commit -m "chore: add infographic [skip ci]"
-          git push || true
+          git push
