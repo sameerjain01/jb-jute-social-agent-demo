@@ -62,26 +62,32 @@ class ContentGenerator:
         return response.choices[0].message.content.strip()
 
     def generate_infographic_data(self, topic: str, theme: str) -> dict:
-        prompt = f"""Generate structured data for a social media infographic for {self.company['name']}.
+        prompt = f"""Create data for a bold social media infographic for {self.company['name']}.
 
-Company: {self.company['description']}
 Topic: {topic}
 Environmental theme: {theme}
 
-Return ONLY valid JSON, no other text:
-{{
-  "stat": "one impactful number or percentage displayed very large (e.g. '8M+' or '75%' or '2 Yrs')",
-  "stat_description": "what this stat means, max 10 words",
-  "bullets": [
-    "first jute benefit, max 12 words",
-    "second benefit, max 12 words",
-    "third benefit, max 12 words"
-  ],
-  "cta": "inspiring call to action, max 8 words",
-  "hashtags": "#Tag1 #Tag2 #Tag3 #Tag4"
-}}
+RULES:
+- The stat must be a single number/figure that is SHOCKING or surprising (e.g. "8M+" "400yrs" "88%")
+- Bullets must each contain a specific number or comparison — NO vague claims
+  BAD: "Jute is biodegradable"
+  GOOD: "Fully biodegrades in 1-2 years vs 400 years for plastic"
+  BAD: "Jute uses less water"
+  GOOD: "Uses 88% less water than cotton per kg"
+- CTA must be punchy, 5 words max, action-oriented
 
-Make the stat visually bold and impactful. All content must relate to sustainability and {self.company['name']}."""
+Return ONLY valid JSON:
+{{
+  "stat": "shocking single figure (e.g. '8M+' or '88%' or '400yrs')",
+  "stat_description": "one line — what this stat means, max 8 words",
+  "bullets": [
+    "specific stat-backed fact, max 10 words",
+    "specific stat-backed fact, max 10 words",
+    "specific stat-backed fact, max 10 words"
+  ],
+  "cta": "punchy action phrase, max 5 words",
+  "hashtags": "#Tag1 #Tag2 #Tag3 #Tag4"
+}}"""
 
         response = self.client.chat.completions.create(
             model=self.MODEL,
@@ -115,13 +121,19 @@ POST FORMAT:
 
 WRITING RULES:
   - Length: {self.content_cfg['min_words']}–{self.content_cfg['max_words']} words
-  - Use {self.content_cfg['emoji_count']} emojis placed naturally (not all at the start)
-  - Use line breaks between paragraphs for readability
-  - End with exactly {self.content_cfg['hashtag_count']} relevant hashtags on their own line
-  - Do NOT use generic filler phrases like "In today's world" or "It's no secret"
-  - Cite specific numbers/percentages where you use them (make them realistic)
-  - Never mention competitor brand names
-  - Never make political statements
+  - Use {self.content_cfg['emoji_count']} emojis placed naturally
+  - Short paragraphs — 2 sentences max each
+  - End with exactly {self.content_cfg['hashtag_count']} hashtags on their own line
+  - Every stat or number must be specific and realistic
+  - Never mention competitor brand names or make political statements
+
+TONE — write like a knowledgeable founder talking to a peer, not a marketer:
+  - First line must STOP THE SCROLL: use a shocking stat, a bold claim, or a direct challenge
+  - Be specific and visual — paint a picture, don't summarise
+  - Conversational and direct — say "you" not "businesses"
+  - No corporate speak. BANNED phrases: "prioritize sustainability", "it's essential to",
+    "enhance your brand", "in today's world", "take the first step", "sustainable future",
+    "eco-conscious consumers", "it's no secret", "as we all know"
 
 OUTPUT:
   Return ONLY the post text. No preamble, no "Here is your post:", no markdown.

@@ -1,14 +1,12 @@
 """
 infographic_generator.py
 ------------------------
-Creates a branded 1080x1080 PNG infographic for each post.
+Creates a bold 1080x1080 PNG infographic — dark green brand design.
 Themes rotate: ocean → earth → trees → water
-Saves file to /tmp and returns the path.
 """
 
 import logging
 import os
-import textwrap
 
 from PIL import Image, ImageDraw, ImageFont
 
@@ -16,38 +14,29 @@ logger = logging.getLogger(__name__)
 
 W, H = 1080, 1080
 
-# Brand palette (RGB)
 C = {
-    "green_dark":  (27,  67,  50),
-    "green_mid":   (45,  106, 79),
-    "green_light": (82,  183, 136),
-    "brown_dark":  (107, 66,  38),
-    "brown_mid":   (139, 94,  60),
-    "cream":       (250, 247, 242),
+    "bg":          (27,  67,  50),   # dark green canvas
+    "card":        (36,  87,  65),   # slightly lighter green for cards
+    "deco":        (22,  55,  41),   # darker for decorative shapes
+    "stat":        (149, 213, 178),  # mint green — big number
     "white":       (255, 255, 255),
-    "dark":        (26,  26,  26),
-    "accent":      (149, 213, 178),
-}
-
-THEMES = {
-    "ocean":  "OCEAN",
-    "earth":  "EARTH",
-    "trees":  "FORESTS",
-    "water":  "WATER",
+    "subtext":     (216, 243, 220),  # very light green
+    "cta":         (255, 225, 104),  # warm yellow — pops on green
+    "brown":       (139, 94,  60),
+    "accent_line": (82,  183, 136),
 }
 
 THEME_TAGLINES = {
-    "ocean":  "Our oceans are speaking. Are we listening?",
-    "earth":  "The earth needs us now, not tomorrow.",
-    "trees":  "Every tree saved is a future protected.",
-    "water":  "Clean water begins with cleaner choices.",
+    "ocean": "Every plastic bag you skip is one less\nthing drowning our oceans.",
+    "earth": "The earth doesn't need saving.\nIt needs fewer excuses.",
+    "trees": "We plant nothing back when we\nchoose synthetic over natural.",
+    "water": "Clean water isn't guaranteed.\nYour packaging choices affect it.",
 }
 
 THEME_ORDER = ["ocean", "earth", "trees", "water"]
 
 FONT_BOLD    = "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf"
 FONT_REGULAR = "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf"
-FONT_ITALIC  = "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf"
 
 
 def _font(path: str, size: int) -> ImageFont.FreeTypeFont:
@@ -57,11 +46,11 @@ def _font(path: str, size: int) -> ImageFont.FreeTypeFont:
         return ImageFont.load_default()
 
 
-def _stat_font_size(stat: str) -> int:
+def _stat_size(stat: str) -> int:
     n = len(stat)
-    if n <= 4:  return 130
-    if n <= 6:  return 105
-    return 85
+    if n <= 4:  return 140
+    if n <= 6:  return 110
+    return 88
 
 
 class InfographicGenerator:
@@ -70,12 +59,15 @@ class InfographicGenerator:
         self.output_dir = output_dir
 
     def generate(self, data: dict, run_id: str) -> str:
-        """Build infographic PNG. Returns file path."""
-        img  = Image.new("RGB", (W, H), C["cream"])
+        img  = Image.new("RGB", (W, H), C["bg"])
         draw = ImageDraw.Draw(img)
 
+        self._decorative_bg(draw)
         self._header(draw, data)
-        self._content(draw, data)
+        self._tagline(draw, data)
+        self._stat_card(draw, data)
+        self._bullets(draw, data)
+        self._cta(draw, data)
         self._footer(draw, data)
 
         path = os.path.join(self.output_dir, f"{run_id}_infographic.png")
@@ -84,101 +76,89 @@ class InfographicGenerator:
         return path
 
     # ------------------------------------------------------------------ #
-    #  Sections                                                            #
-    # ------------------------------------------------------------------ #
+
+    def _decorative_bg(self, draw):
+        # Large circle top-right
+        draw.ellipse([(700, -180), (1180, 300)], fill=C["deco"])
+        # Small circle bottom-left
+        draw.ellipse([(-100, 820), (200, 1120)], fill=C["deco"])
+        # Horizontal accent stripe
+        draw.rectangle([(0, 148), (W, 152)], fill=C["accent_line"])
 
     def _header(self, draw, data):
-        draw.rectangle([(0, 0), (W, 150)], fill=C["green_dark"])
-
-        # Brand name
-        draw.text((50, 42), "JuteVerde", font=_font(FONT_BOLD, 54), fill=C["white"])
-
-        # Theme label (right)
-        label = THEMES.get(data.get("theme", "earth"), "EARTH")
+        draw.text((50, 44), "JuteVerde", font=_font(FONT_BOLD, 58), fill=C["white"])
+        theme = data.get("theme", "earth").upper()
         f = _font(FONT_REGULAR, 26)
-        text = f"◉  {label}"
-        bbox = draw.textbbox((0, 0), text, font=f)
-        tw = bbox[2] - bbox[0]
-        draw.text((W - tw - 50, 60), text, font=f, fill=C["accent"])
+        bbox = draw.textbbox((0, 0), theme, font=f)
+        draw.text((W - (bbox[2]-bbox[0]) - 50, 60), theme, font=f, fill=C["stat"])
 
-    def _content(self, draw, data):
-        y = 175
-
-        # Theme tagline
+    def _tagline(self, draw, data):
         tagline = THEME_TAGLINES.get(data.get("theme", "earth"), "")
-        draw.text((50, y), tagline, font=_font(FONT_ITALIC, 27), fill=C["brown_mid"])
-        y += 40
+        f = _font(FONT_BOLD, 30)
+        y = 175
+        for line in tagline.split("\n"):
+            draw.text((50, y), line, font=f, fill=C["subtext"])
+            y += 42
 
-        # Accent line
-        draw.rectangle([(50, y), (720, y + 4)], fill=C["green_light"])
-        y += 30
+    def _stat_card(self, draw, data):
+        # Card background
+        draw.rounded_rectangle([(50, 278), (W-50, 490)], radius=20, fill=C["card"])
 
-        # Big stat
         stat = data.get("stat", "—")
-        f_stat = _font(FONT_BOLD, _stat_font_size(stat))
+        f_stat = _font(FONT_BOLD, _stat_size(stat))
         bbox = draw.textbbox((0, 0), stat, font=f_stat)
-        sw = bbox[2] - bbox[0]
-        sh = bbox[3] - bbox[1]
-        draw.text(((W - sw) // 2, y), stat, font=f_stat, fill=C["green_dark"])
-        y += sh + 10
+        sw, sh = bbox[2]-bbox[0], bbox[3]-bbox[1]
+        draw.text(((W - sw)//2, 295), stat, font=f_stat, fill=C["stat"])
 
-        # Stat description
-        stat_desc = data.get("stat_description", "")
+        desc = data.get("stat_description", "")
         f_desc = _font(FONT_REGULAR, 28)
-        y = self._centered_text(draw, stat_desc, y, f_desc, C["dark"], max_w=800)
-        y += 28
+        y = 295 + sh + 8
+        self._centered(draw, desc, y, f_desc, C["white"], max_w=880)
 
-        # Bullets
-        f_b = _font(FONT_REGULAR, 26)
-        for bullet in data.get("bullets", [])[:3]:
-            draw.text((50, y), "▶", font=f_b, fill=C["green_mid"])
-            y = self._left_text(draw, bullet, x=90, y=y, font=f_b, color=C["dark"], max_w=940)
-            y += 10
+    def _bullets(self, draw, data):
+        bullets = data.get("bullets", [])
+        f = _font(FONT_REGULAR, 28)
+        y = 515
+        for bullet in bullets[:3]:
+            # Bullet pill
+            draw.rounded_rectangle([(50, y-2), (68, y+28)], radius=4, fill=C["stat"])
+            y = self._left_text(draw, bullet, x=90, y=y, font=f, color=C["white"], max_w=950)
+            y += 18
 
-        y += 15
-
-        # Divider
-        draw.rectangle([(50, y), (W - 50, y + 3)], fill=C["accent"])
-        y += 22
-
-        # CTA
+    def _cta(self, draw, data):
         cta = data.get("cta", "")
-        f_cta = _font(FONT_BOLD, 32)
-        y = self._centered_text(draw, cta, y + 8, f_cta, C["brown_dark"], max_w=900)
-
-        # Website (pinned near footer)
-        f_web = _font(FONT_REGULAR, 21)
-        draw.text((50, 905), "juteverde.com", font=f_web, fill=C["green_mid"])
-        draw.text((50, 930), "Sustainable Jute Solutions for Modern Business", font=f_web, fill=C["brown_mid"])
+        f = _font(FONT_BOLD, 36)
+        draw.rectangle([(0, 730), (W, 734)], fill=C["accent_line"])
+        self._centered(draw, cta, 755, f, C["cta"], max_w=900)
 
     def _footer(self, draw, data):
-        draw.rectangle([(0, 960), (W, H)], fill=C["brown_dark"])
-        hashtags = data.get("hashtags", "#SustainablePackaging #JuteVerde #EcoFriendly #GoGreen")
-        draw.text((50, 985), hashtags, font=_font(FONT_REGULAR, 22), fill=C["white"])
+        draw.rectangle([(0, 855), (W, 860)], fill=C["card"])
+        draw.rectangle([(0, 860), (W, H)], fill=C["deco"])
+        f = _font(FONT_REGULAR, 22)
+        draw.text((50, 875), "juteverde.com", font=f, fill=C["stat"])
+        hashtags = data.get("hashtags", "#JuteVerde #SustainablePackaging #EcoFriendly #GoGreen")
+        draw.text((50, 910), hashtags, font=f, fill=C["subtext"])
 
     # ------------------------------------------------------------------ #
-    #  Text helpers                                                        #
-    # ------------------------------------------------------------------ #
 
-    def _centered_text(self, draw, text, y, font, color, max_w=900) -> int:
+    def _centered(self, draw, text, y, font, color, max_w=900) -> int:
         for line in self._wrap(draw, text, font, max_w):
             bbox = draw.textbbox((0, 0), line, font=font)
-            lw = bbox[2] - bbox[0]
-            lh = bbox[3] - bbox[1]
-            draw.text(((W - lw) // 2, y), line, font=font, fill=color)
+            lw, lh = bbox[2]-bbox[0], bbox[3]-bbox[1]
+            draw.text(((W-lw)//2, y), line, font=font, fill=color)
             y += lh + 8
         return y
 
-    def _left_text(self, draw, text, x, y, font, color, max_w=940) -> int:
+    def _left_text(self, draw, text, x, y, font, color, max_w) -> int:
         for line in self._wrap(draw, text, font, max_w - x):
             bbox = draw.textbbox((0, 0), line, font=font)
-            lh = bbox[3] - bbox[1]
+            lh = bbox[3]-bbox[1]
             draw.text((x, y), line, font=font, fill=color)
             y += lh + 6
         return y
 
     @staticmethod
-    def _wrap(draw, text: str, font, max_w: int) -> list:
+    def _wrap(draw, text, font, max_w) -> list:
         words = text.split()
         lines, current = [], []
         for word in words:
