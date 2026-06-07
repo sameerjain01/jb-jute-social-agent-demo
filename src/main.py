@@ -28,7 +28,6 @@ from generator import ContentGenerator
 from guardrail import GuardrailJudge
 from sheets_writer import SheetsWriter
 from infographic_generator import InfographicGenerator, next_theme
-from drive_uploader import DriveUploader
 
 logging.basicConfig(
     level=logging.INFO,
@@ -133,11 +132,6 @@ def run():
                 img_url = (
                     f"https://raw.githubusercontent.com/sameerjain01/"
                     f"jb-jute-social-agent-demo/main/generated/{run_id}_infographic.png"
-                )
-                sheets.publish_infographic(
-                    run_id, topic, theme,
-                    infographic_data.get("stat", ""),
-                    img_url,
                 )
                 logger.info(f"✅ Infographic generated | url: {img_url}")
             except Exception as e:

@@ -24,9 +24,8 @@ SCOPES = [
 ]
 
 # Tab names
-TAB_FEED         = "Feed"
-TAB_LOG          = "Log"
-TAB_INFOGRAPHICS = "Infographics"
+TAB_FEED = "Feed"
+TAB_LOG  = "Log"
 
 # Column headers
 FEED_HEADERS = [
@@ -36,10 +35,6 @@ FEED_HEADERS = [
 LOG_HEADERS = [
     "Run ID", "Timestamp (UTC)", "Attempt", "Topic", "Format",
     "Post Content", "Guardrail Score", "Pass", "Flags", "Reason",
-]
-INFOGRAPHIC_HEADERS = [
-    "Run ID", "Timestamp (UTC)", "Topic", "Theme",
-    "Stat", "Drive URL", "Status",
 ]
 
 
@@ -136,23 +131,6 @@ class SheetsWriter:
             value_input_option="RAW",
         )
 
-    def publish_infographic(
-        self,
-        run_id: str,
-        topic: str,
-        theme: str,
-        stat: str,
-        img_url: str,
-    ) -> None:
-        ws = self.sheet.worksheet(TAB_INFOGRAPHICS)
-        hyperlink = f'=HYPERLINK("{img_url}", "View Infographic")'
-        ws.insert_row(
-            [run_id, _utcnow(), topic, theme, stat, hyperlink, "published"],
-            index=2,
-            value_input_option="USER_ENTERED",
-        )
-        logger.info(f"Infographic logged | run_id={run_id} | url={img_url}")
-
     def log_skip(self, run_id: str, topic: str, format_type: str, reason: str) -> None:
         ws = self.sheet.worksheet(TAB_FEED)
         ws.append_row(
@@ -185,11 +163,6 @@ class SheetsWriter:
             self._format_header_row(ws)
             logger.info(f"Created tab: {TAB_LOG}")
 
-        if TAB_INFOGRAPHICS not in existing:
-            ws = self.sheet.add_worksheet(title=TAB_INFOGRAPHICS, rows=1000, cols=8)
-            ws.append_row(INFOGRAPHIC_HEADERS)
-            self._format_header_row(ws)
-            logger.info(f"Created tab: {TAB_INFOGRAPHICS}")
 
     def _format_header_row(self, ws) -> None:
         """Bold the header row."""
