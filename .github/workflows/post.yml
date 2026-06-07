@@ -1,0 +1,53 @@
+name: 🌿 JuteVerde Social Agent
+
+on:
+  # ── Scheduled run: 9am UTC daily ──────────────────────────────────────
+  schedule:
+    - cron: "0 9 * * *"
+
+  # ── Manual trigger: the "Run workflow" button in GitHub Actions UI ─────
+  # Use this for live demos — click the button, watch it run in ~30 seconds
+  workflow_dispatch:
+    inputs:
+      reason:
+        description: "Why are you triggering manually? (optional, for the log)"
+        required: false
+        default: "Manual demo run"
+        type: string
+
+jobs:
+  post:
+    name: Generate & Publish Post
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      # 1. Check out the repo
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      # 2. Set up Python
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: "pip"
+
+      # 3. Install dependencies
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      # 4. Log the trigger reason (visible in GitHub Actions UI)
+      - name: Log trigger info
+        run: |
+          echo "Trigger: ${{ github.event_name }}"
+          echo "Reason: ${{ github.event.inputs.reason || 'Scheduled run' }}"
+          echo "Time: $(date -u)"
+
+      # 5. Run the agent
+      - name: Run Social Media Agent
+        env:
+          GEMINI_API_KEY:          ${{ secrets.GEMINI_API_KEY }}
+          GOOGLE_CREDENTIALS_JSON: ${{ secrets.GOOGLE_CREDENTIALS_JSON }}
+          SPREADSHEET_ID:          ${{ secrets.SPREADSHEET_ID }}
+        run: python src/main.py

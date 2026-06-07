@@ -1,0 +1,100 @@
+topics:
+  - id: T01
+    name: "Jute vs plastic bags: the environmental numbers"
+    category: education
+    hook: "How many plastic bags does one jute bag replace?"
+
+  - id: T02
+    name: "Carbon sequestration: how jute farming fights climate change"
+    category: education
+    hook: "Jute absorbs CO₂ at a remarkable rate during its 4-month growing cycle"
+
+  - id: T03
+    name: "Why jute packaging is winning in B2B supply chains"
+    category: pitch
+    hook: "Procurement teams are switching — here's what's driving the decision"
+
+  - id: T04
+    name: "Jute in sustainable fashion and textiles"
+    category: education
+    hook: "From burlap to high fashion — jute's textile transformation"
+
+  - id: T05
+    name: "How to make your packaging ESG-compliant without breaking budget"
+    category: pitch
+    hook: "Sustainability audits are asking harder questions about packaging"
+
+  - id: T06
+    name: "Fair trade jute sourcing from Bangladesh and India"
+    category: education
+    hook: "The farmers behind the fiber — and why their story matters to your brand"
+
+  - id: T07
+    name: "Jute in home décor: the interior design shift nobody talks about"
+    category: education
+    hook: "Designers are specifying natural fibers — and jute leads the list"
+
+  - id: T08
+    name: "Circular economy in action: what happens to jute after use"
+    category: education
+    hook: "Composting, mulching, or soil enrichment — jute closes the loop"
+
+  - id: T09
+    name: "Greenwashing vs genuine sustainability: how to tell the difference"
+    category: education
+    hook: "3 questions to ask before trusting any 'eco-friendly' claim"
+
+  - id: T10
+    name: "Jute grow bags and agricultural applications"
+    category: education
+    hook: "Nurseries and urban farms are replacing plastic pots — here's why"
+
+  - id: T11
+    name: "Water and land: jute vs cotton resource comparison"
+    category: education
+    hook: "Cotton uses 20,000 litres of water per kg. Jute uses a fraction of that"
+
+  - id: T12
+    name: "How switching to jute packaging can improve your brand perception"
+    category: pitch
+    hook: "Customers notice. Research shows sustainable packaging drives loyalty"
+
+  - id: T13
+    name: "Jute geotextiles for erosion control and landscaping"
+    category: education
+    hook: "Civil engineers and landscapers have been using this for decades"
+
+  - id: T14
+    name: "The hidden cost of single-use plastic for small businesses"
+    category: pitch
+    hook: "Regulation risk, consumer backlash, disposal costs — it adds up fast"
+
+  - id: T15
+    name: "Getting your first sustainability certification as a small business"
+    category: cta
+    hook: "B Corp, ISO 14001, or just starting with a carbon audit — your path"
+
+  - id: T16
+    name: "Consumer demand data: what buyers actually want from packaging in 2024"
+    category: education
+    hook: "73% of global consumers say they'd pay more for sustainable packaging"
+
+  - id: T17
+    name: "Jute rope and industrial applications beyond packaging"
+    category: education
+    hook: "Construction, marine, agriculture — jute's industrial versatility"
+
+  - id: T18
+    name: "Building a sustainability story your customers will actually believe"
+    category: pitch
+    hook: "Authenticity beats perfection. Here's how small businesses win this"
+
+  - id: T19
+    name: "How to calculate your packaging's carbon footprint (and reduce it)"
+    category: cta
+    hook: "A simple framework any business can use today"
+
+  - id: T20
+    name: "Jute innovation: new product categories emerging in 2024"
+    category: education
+    hook: "Composite materials, biomedical applications, smart textiles with jute"
