@@ -24,9 +24,11 @@ class DriveUploader:
         creds = Credentials.from_service_account_info(creds_data, scopes=SCOPES)
         self.service = build("drive", "v3", credentials=creds, cache_discovery=False)
 
-    def upload(self, file_path: str, filename: str) -> str:
+    def upload(self, file_path: str, filename: str, folder_id: str = None) -> str:
         """Upload PNG to Drive, make it public. Returns view URL."""
         file_meta = {"name": filename}
+        if folder_id:
+            file_meta["parents"] = [folder_id]
         media = MediaFileUpload(file_path, mimetype="image/png", resumable=False)
 
         file = self.service.files().create(

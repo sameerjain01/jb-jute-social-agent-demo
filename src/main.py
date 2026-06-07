@@ -68,6 +68,7 @@ def run():
     groq_api_key         = get_env("GROQ_API_KEY")
     google_credentials   = get_env("GOOGLE_CREDENTIALS_JSON")
     spreadsheet_id       = get_env("SPREADSHEET_ID")
+    drive_folder_id      = os.environ.get("DRIVE_FOLDER_ID", "")
 
     # --- Initialise components ---
     sheets    = SheetsWriter(google_credentials, spreadsheet_id)
@@ -126,7 +127,7 @@ def run():
                 ig = InfographicGenerator()
                 img_path = ig.generate(infographic_data, run_id)
                 uploader = DriveUploader(google_credentials)
-                drive_url = uploader.upload(img_path, f"{run_id}_infographic.png")
+                drive_url = uploader.upload(img_path, f"{run_id}_infographic.png", folder_id=drive_folder_id)
                 sheets.publish_infographic(
                     run_id, topic, theme,
                     infographic_data.get("stat", ""),
