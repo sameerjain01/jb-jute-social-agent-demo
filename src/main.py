@@ -116,26 +116,35 @@ def run():
         sheets.log_attempt(run_id, attempt, topic, format_type, post_content, result)
 
         if result["pass"]:
-            sheets.publish_post(run_id, topic, format_type, post_content, result["score"])
-            logger.info(f"✅ Post published (score: {result['score']})")
-
-            # --- Infographic ---
+            # --- Infographic (generate before publishing so URL goes into Feed row) ---
+            img_url = ""
             try:
                 theme = next_theme(recent_posts)
                 logger.info(f"Generating infographic | theme: {theme}")
                 infographic_data = generator.generate_infographic_data(topic, theme)
-                ig = InfographicGenerator()
-                img_path = ig.generate(infographic_data, run_id)
-                uploader = DriveUploader(google_credentials)
-                drive_url = uploader.upload(img_path, f"{run_id}_infographic.png", folder_id=drive_folder_id)
+
+                repo_root = Path(__file__).parent.parent
+                output_dir = repo_root / "generated"
+                output_dir.mkdir(exist_ok=True)
+
+                ig = InfographicGenerator(output_dir=str(output_dir))
+                ig.generate(infographic_data, run_id)
+
+                img_url = (
+                    f"https://raw.githubusercontent.com/sameerjain01/"
+                    f"jb-jute-social-agent-demo/main/generated/{run_id}_infographic.png"
+                )
                 sheets.publish_infographic(
                     run_id, topic, theme,
                     infographic_data.get("stat", ""),
-                    drive_url,
+                    img_url,
                 )
-                logger.info(f"✅ Infographic published: {drive_url}")
+                logger.info(f"✅ Infographic generated | url: {img_url}")
             except Exception as e:
                 logger.error(f"Infographic failed (post still published): {e}")
+
+            sheets.publish_post(run_id, topic, format_type, post_content, result["score"], img_url)
+            logger.info(f"✅ Post published (score: {result['score']})")
 
             logger.info("=" * 60)
             return  # clean exit

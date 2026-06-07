@@ -31,7 +31,7 @@ TAB_INFOGRAPHICS = "Infographics"
 # Column headers
 FEED_HEADERS = [
     "Run ID", "Timestamp (UTC)", "Topic", "Format",
-    "Post Content", "Guardrail Score", "Status",
+    "Post Content", "Guardrail Score", "Status", "Infographic URL",
 ]
 LOG_HEADERS = [
     "Run ID", "Timestamp (UTC)", "Attempt", "Topic", "Format",
@@ -90,9 +90,11 @@ class SheetsWriter:
         format_type: str,
         content: str,
         score: int,
+        infographic_url: str = "",
     ) -> None:
         ws = self.sheet.worksheet(TAB_FEED)
-        ws.append_row(
+        hyperlink = f'=HYPERLINK("{infographic_url}", "View Infographic")' if infographic_url else ""
+        ws.insert_row(
             [
                 run_id,
                 _utcnow(),
@@ -101,8 +103,10 @@ class SheetsWriter:
                 content,
                 score,
                 "published",
+                hyperlink,
             ],
-            value_input_option="RAW",
+            index=2,
+            value_input_option="USER_ENTERED",
         )
         logger.info(f"Published post to Feed tab | run_id={run_id}")
 
@@ -138,14 +142,16 @@ class SheetsWriter:
         topic: str,
         theme: str,
         stat: str,
-        drive_url: str,
+        img_url: str,
     ) -> None:
         ws = self.sheet.worksheet(TAB_INFOGRAPHICS)
-        ws.append_row(
-            [run_id, _utcnow(), topic, theme, stat, drive_url, "published"],
-            value_input_option="RAW",
+        hyperlink = f'=HYPERLINK("{img_url}", "View Infographic")'
+        ws.insert_row(
+            [run_id, _utcnow(), topic, theme, stat, hyperlink, "published"],
+            index=2,
+            value_input_option="USER_ENTERED",
         )
-        logger.info(f"Infographic logged | run_id={run_id} | url={drive_url}")
+        logger.info(f"Infographic logged | run_id={run_id} | url={img_url}")
 
     def log_skip(self, run_id: str, topic: str, format_type: str, reason: str) -> None:
         ws = self.sheet.worksheet(TAB_FEED)
@@ -168,6 +174,10 @@ class SheetsWriter:
             ws.append_row(FEED_HEADERS)
             self._format_header_row(ws)
             logger.info(f"Created tab: {TAB_FEED}")
+        else:
+            ws = self.sheet.worksheet(TAB_FEED)
+            if "Infographic URL" not in ws.row_values(1):
+                ws.update_cell(1, len(FEED_HEADERS), "Infographic URL")
 
         if TAB_LOG not in existing:
             ws = self.sheet.add_worksheet(title=TAB_LOG, rows=2000, cols=12)
