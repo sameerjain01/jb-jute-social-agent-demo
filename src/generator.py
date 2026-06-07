@@ -5,7 +5,10 @@ Calls Groq to write a LinkedIn post given a topic and format type.
 Format types:  educate | pitch | cta
 """
 
+import json
 import logging
+import re
+
 from groq import Groq
 
 logger = logging.getLogger(__name__)
@@ -57,6 +60,40 @@ class ContentGenerator:
             max_tokens=600,
         )
         return response.choices[0].message.content.strip()
+
+    def generate_infographic_data(self, topic: str, theme: str) -> dict:
+        prompt = f"""Generate structured data for a social media infographic for {self.company['name']}.
+
+Company: {self.company['description']}
+Topic: {topic}
+Environmental theme: {theme}
+
+Return ONLY valid JSON, no other text:
+{{
+  "stat": "one impactful number or percentage displayed very large (e.g. '8M+' or '75%' or '2 Yrs')",
+  "stat_description": "what this stat means, max 10 words",
+  "bullets": [
+    "first jute benefit, max 12 words",
+    "second benefit, max 12 words",
+    "third benefit, max 12 words"
+  ],
+  "cta": "inspiring call to action, max 8 words",
+  "hashtags": "#Tag1 #Tag2 #Tag3 #Tag4"
+}}
+
+Make the stat visually bold and impactful. All content must relate to sustainability and {self.company['name']}."""
+
+        response = self.client.chat.completions.create(
+            model=self.MODEL,
+            messages=[{"role": "user", "content": prompt}],
+            temperature=0.7,
+            max_tokens=400,
+        )
+        raw = response.choices[0].message.content.strip()
+        clean = re.sub(r"```json|```", "", raw).strip()
+        data = json.loads(clean)
+        data["theme"] = theme
+        return data
 
     def _build_prompt(self, topic: str, format_type: str) -> str:
         fmt_instruction = FORMAT_INSTRUCTIONS.get(format_type, FORMAT_INSTRUCTIONS["educate"])

@@ -27,6 +27,8 @@ from topic_selector import TopicSelector
 from generator import ContentGenerator
 from guardrail import GuardrailJudge
 from sheets_writer import SheetsWriter
+from infographic_generator import InfographicGenerator, next_theme
+from drive_uploader import DriveUploader
 
 logging.basicConfig(
     level=logging.INFO,
@@ -114,7 +116,26 @@ def run():
 
         if result["pass"]:
             sheets.publish_post(run_id, topic, format_type, post_content, result["score"])
-            logger.info(f"✅ SUCCESS — post published (score: {result['score']})")
+            logger.info(f"✅ Post published (score: {result['score']})")
+
+            # --- Infographic ---
+            try:
+                theme = next_theme(recent_posts)
+                logger.info(f"Generating infographic | theme: {theme}")
+                infographic_data = generator.generate_infographic_data(topic, theme)
+                ig = InfographicGenerator()
+                img_path = ig.generate(infographic_data, run_id)
+                uploader = DriveUploader(google_credentials)
+                drive_url = uploader.upload(img_path, f"{run_id}_infographic.png")
+                sheets.publish_infographic(
+                    run_id, topic, theme,
+                    infographic_data.get("stat", ""),
+                    drive_url,
+                )
+                logger.info(f"✅ Infographic published: {drive_url}")
+            except Exception as e:
+                logger.error(f"Infographic failed (post still published): {e}")
+
             logger.info("=" * 60)
             return  # clean exit
 
