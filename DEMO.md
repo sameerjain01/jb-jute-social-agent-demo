@@ -1,98 +1,152 @@
-# JuteVerde Social Media Agent — Demo Guide
+# JuteVerde Social Media Agent — Operator Guide
 
-**For:** Marketing team running live demos
-**Time needed:** 5 minutes
+**For:** Anyone running or showing the demo
+**Time needed:** 5 minutes to demo, 2 minutes to set up
 **Technical knowledge required:** None
 
 ---
 
-## What is this?
+## Your two links — bookmark both
 
-An automated content agent that writes social media posts for a jute business — every day, on a schedule, with no human involved.
-
-It picks a topic, writes a post, has a second AI check it for quality, then saves the approved post ready to publish anywhere — LinkedIn, Instagram, Facebook, X, wherever.
-
----
-
-## Why Google Sheets and not posting directly to social media?
-
-> "Every major social platform charges businesses to post through their API — some charge just to get access. Google Sheets is free, and for a demo it's actually better because you can watch the post appear on screen in real time. Wiring it up to post directly to any platform is straightforward once the client wants to go live."
+| What | Link |
+|------|------|
+| Google Sheet (posts + log) | https://docs.google.com/spreadsheets/d/1ga93Oi5MvnpzGteWiCZ4GWUW1vegUyxoH6T68IYHusg |
+| GitHub Actions (trigger run) | https://github.com/sameerjain01/jb-jute-social-agent-demo/actions/workflows/post.yml |
 
 ---
 
-## What are Guardrails?
+## Before the demo — 2-minute checklist
 
-The most common question you'll get: *"how do you make sure it doesn't post something embarrassing?"*
+Open both links in separate browser tabs. Then:
 
-> "After the AI writes the post, a completely separate AI reads it and scores it out of 10. It checks whether the post is accurate, on-brand, and professional. Only posts scoring 6 or above get published. If a post fails, the system retries up to 3 times automatically. Every attempt — including rejections — is logged with the reason why."
+1. **Google Sheet** — click the **Feed** tab. Confirm there are existing rows. If it's empty, run the workflow once now and wait 40 seconds.
+2. **GitHub Actions** — confirm the last run shows a green tick. If it shows red, see **Troubleshooting** below.
 
----
-
-## Before you demo — open these two tabs
-
-- **Tab 1 — the Google Sheet:** shows the posts the agent has already written
-- **Tab 2 — GitHub Actions:** where you trigger the live run
+That's it. You're ready.
 
 ---
 
-## The demo (5 minutes)
+## The demo — step by step
 
-**1. Show the Sheet first**
+### Step 1 — Show the Sheet
 
-Open Tab 1. Show the Feed tab (approved posts) and the Log tab (every attempt, including rejections with scores and reasons).
+Open the Google Sheet. Show the **Feed** tab.
 
-> "This is the output. Every approved post lands here, ready to publish. The Log tab shows everything — including posts the system rejected and why."
+Point out the columns:
+- **Topic** — what the post is about
+- **Format** — educate / pitch / call-to-action
+- **Post Content** — the full post text, ready to copy and post anywhere
+- **Guardrail Score** — out of 10, always 6 or above to get published
+- **Infographic URL** — click "View Infographic" to open the image in a new tab
 
----
+Say:
+> "This is the output. Every approved post lands here, ready to publish. Click 'View Infographic' to see the image it generated alongside the post."
 
-**2. Trigger a live run**
+Click a **View Infographic** link to show an example image.
 
-Switch to Tab 2. Click **Run workflow → Run workflow**.
+Show the **Log** tab next.
 
-> "Normally this runs automatically every morning. I'm triggering it manually so you can watch it happen."
-
----
-
-**3. Watch the post appear**
-
-Switch back to Tab 1. A new row appears within 30 seconds.
-
-Point out: the topic, the format, the guardrail score, the status "published".
-
-> "It picked a topic it hasn't covered recently, wrote the post, had a second AI score it — 9 out of 10 — and published it. Thirty seconds. Every morning, without anyone touching it."
+Say:
+> "The Log tab shows every attempt — including ones the AI rejected and why. Nothing is hidden."
 
 ---
 
-**4. Run it again**
+### Step 2 — Trigger a live run
 
-Trigger a second run. Show it picks a **different topic and a different format**.
+Switch to GitHub Actions. Click **Run workflow**, then click the green **Run workflow** button.
 
-> "It never repeats. It rotates between educational posts, pitch posts, and calls to action — so the feed stays varied automatically."
+Say:
+> "Normally this runs every morning at 9am automatically. I'm triggering it manually so you can watch it happen live."
 
 ---
 
-## Questions you'll probably get
+### Step 3 — Watch the post appear
+
+Stay on GitHub Actions. The run appears immediately — a yellow circle means it's running.
+
+Switch back to the Google Sheet. **Refresh the tab after about 40 seconds** — a new row appears at the top with today's timestamp.
+
+Point out:
+- The topic is different from the previous post
+- The score is visible
+- Click **View Infographic** to open the image — it reflects the topic (ocean, forests, earth, or water)
+
+Say:
+> "It picked a topic it hasn't covered recently, wrote the post, had a second AI score it, and generated a matching infographic — all in under a minute. Every morning, without anyone touching it."
+
+---
+
+### Step 4 — Run it again (optional, max impact)
+
+Trigger a second run. Wait 40 seconds. Show the new row at the top.
+
+Point out the topic and format have rotated.
+
+Say:
+> "It never repeats topics or formats. It rotates between educational posts, pitches, and calls to action so the feed stays varied on its own."
+
+---
+
+## Questions you'll get
 
 **"Can it post directly to Instagram / LinkedIn / X?"**
-> "Yes. That's the next step — it's straightforward to connect. We built the demo on Sheets so you can actually see the output live. Direct posting is ready to add when the client wants to go live."
+> "Yes. That's the next step — the content is already written and the image is already generated, so connecting to any platform is straightforward. The demo uses Sheets because you can watch it happen live on screen."
 
-**"What stops it posting something wrong?"**
-> "The guardrail — a second AI scores every post before it's approved. Anything below a 6 is rejected and retried. Full log always visible."
+**"What stops it posting something embarrassing?"**
+> "After it writes the post, a completely separate AI reads it and scores it out of 10. Anything below 6 is rejected and it tries again — up to 3 times. Every rejection is logged with the reason. Only posts that pass go to the Feed."
 
 **"How much does it cost to run?"**
-> "This demo runs at zero cost. AI writing, quality check, scheduling, storage — all free. The only cost that comes in later is platform API access for direct posting, and that depends on which platforms."
+> "This demo runs at zero cost. AI writing, quality check, image generation, scheduling, storage — all free. The only cost that comes in later is the platform API fee for direct posting, which depends on the platform."
 
-**"Can we change the topics or the brand?"**
-> "Yes — topics and brand voice are just a simple list. No coding. Change the list, push it, live on the next run."
+**"Can we change the topics or the brand voice?"**
+> "Yes — topics and brand voice are a simple text list. No coding. Change the list, save it, live on the next run."
 
 **"What if it fails one day?"**
-> "It skips that day and nothing goes out. The failure shows up immediately so someone can check. It doesn't retry bad content — it just waits for the next scheduled run."
+> "It skips that day. Nothing bad goes out. The failure shows as a red mark in GitHub so someone can check. It doesn't retry bad content — it waits for the next scheduled run."
+
+**"Who owns the AI-generated content?"**
+> "The business does. The AI writes a draft, the guardrail checks it, and the business publishes it. Same as hiring a copywriter."
 
 ---
 
-## What this is not (be upfront)
+## Troubleshooting
 
-- Does not post directly to social platforms yet
-- Text only — no images or graphics
+### Last GitHub run shows red (failed)
+
+1. Click the failed run to open it
+2. Click **post** to expand the job steps
+3. Scroll to the red step — the error message is right there
+
+Common causes:
+- **"API key invalid"** — the Groq key has expired. Generate a new one at console.groq.com → Settings → API Keys, then update the secret in GitHub (Settings → Secrets → GROQ_API_KEY)
+- **"Guardrail failed after 3 attempts"** — rare. Just trigger a new run. It picks a different topic each time.
+
+### Sheet shows no new row after 60 seconds
+
+- Check GitHub Actions — the run may still be in progress (yellow circle) or may have failed
+- Wait for it to fully complete (green tick), then refresh the Sheet
+
+### "View Infographic" shows 404
+
+- The infographic file is committed to GitHub as part of the run
+- If the run is still in progress, the file won't exist yet — wait for green, then click again
+
+### Sheet Feed tab is completely empty
+
+- Run the workflow once manually and wait 60 seconds
+- If still empty, check GitHub Actions for errors (see above)
+
+---
+
+## What this is and what it isn't
+
+**Is:**
+- Automated post writing, quality scoring, and infographic generation
+- Runs daily on a schedule, no human required
+- Logs every decision — transparent and auditable
+- Zero running cost
+
+**Is not (yet):**
+- Does not post directly to social platforms — output is in Google Sheets ready to copy
 - Does not reply to comments or engage with followers
-- One brand voice per setup
+- One brand voice per setup (multiple brands = multiple deployments)
