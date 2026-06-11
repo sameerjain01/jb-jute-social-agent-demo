@@ -41,28 +41,23 @@ EMOTIONAL_HOOKS = {
 
 FORMAT_INSTRUCTIONS = {
     "educate": """
-You are writing an EDUCATIONAL post.
-Structure:
-  1. Open with one surprising or specific fact that stops the scroll (1 sentence)
-  2. Explain the insight in 2-3 short punchy paragraphs — paint a picture
-  3. Connect it to what makes a fresh artisan bakery different
-  4. End with a question or observation that invites a reply
+You are writing an EDUCATIONAL post. Keep it tight — 3 punchy paragraphs max.
+  1. Line 1: one fact or image so specific it stops the scroll. No warmup.
+  2. Middle: one sharp insight. One paragraph. Done.
+  3. Last line: a question or observation — 1 sentence, invites a reply.
 """,
     "pitch": """
-You are writing a PITCH post.
-Structure:
-  1. Open by naming something the reader already feels (a morning routine, a craving, a disappointment) — 1 sentence
-  2. Show why chain or supermarket alternatives fall short — be specific, not vague
-  3. Introduce Sarah's Bakery as the real alternative — show don't tell
-  4. End with a soft invite: "come find us", "DM to pre-order", "we open at 7"
+You are writing a PITCH post. Short and sharp — no wasted words.
+  1. Line 1: name exactly what the reader is feeling or missing. Hit it directly.
+  2. One sentence on why chain alternatives fail — specific, not vague.
+  3. One sentence on what Sarah's does instead — show, don't explain.
+  4. Final line: soft invite. "We open at 7." "DM to order." Nothing more.
 """,
     "cta": """
-You are writing a CALL-TO-ACTION post.
-Structure:
-  1. Open with a reason to act now — limited batch, seasonal item ending, pre-order deadline
-  2. State ONE clear action (visit us, DM to order, tag a friend who needs this)
-  3. Give them a quick reason why it's worth it
-  4. Make the action prominent in the final line
+You are writing a CALL-TO-ACTION post. Urgency, one action, done.
+  1. Line 1: the reason to act NOW. Limited batch, deadline, seasonal end.
+  2. ONE action — visit, DM, tag someone. State it plainly.
+  3. Final line: make the action impossible to miss.
 """,
 }
 
@@ -165,16 +160,17 @@ WRITING RULES:
 EMOTIONAL DIRECTION:
 {emotional_instruction if emotional_instruction else "Write with warmth and specificity. Tap into memory, comfort, or wonder as the topic suggests."}
 
-TONE — write like the baker who actually made it, not a social media manager:
-  - First line must stop the scroll: a specific detail, a surprising number, or a vivid sensory image
-  - Lean into memory and emotion: a warm kitchen, a grandmother's recipe, the smell that fills the house
-    on a Sunday morning, a child's face when the box opens. These are the real reasons people come back.
-  - Be concrete and sensory — describe what you smell, see, taste, feel
-  - Talk directly to the reader: "you", not "our customers"
-  - Short sentences. Real words. No filler.
-  - BANNED phrases: "made with love", "artisan quality", "farm to table", "guilt-free indulgence",
+SARAH'S BRAND VOICE — warm, specific, and real. Like a baker talking to a regular, not a brand manager:
+  - Line 1 must be impossible to scroll past. A number, a smell, a feeling, a bold claim.
+  - Every sentence must earn its place. If it does not add something, cut it.
+  - Memory and emotion are the product. The muffin is just the vehicle.
+    A warm kitchen. A grandmother. The smell that pulls you back 20 years. That is what sells.
+  - One idea per post. Say it clearly. Stop.
+  - Talk to ONE person: "you", never "our customers" or "everyone"
+  - Sound like the person who woke up at 4am to make this — not someone writing about them
+  - BANNED phrases: "made with love", "artisan quality", "farm to table", "guilt-free",
     "treat yourself to", "perfect for any occasion", "baked to perfection", "a little something special",
-    "we take pride in", "quality ingredients", "passion for baking"
+    "we take pride in", "quality ingredients", "passion for baking", "something for everyone"
 
 OUTPUT:
   Return ONLY the post text. No preamble, no "Here is your post:", no markdown.

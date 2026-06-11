@@ -22,10 +22,10 @@ content:
     - cta       # Drive one concrete action (visit, pre-order, DM)
 
   platform: "instagram"
-  min_words: 80
-  max_words: 150
-  hashtag_count: 8
-  emoji_count: 5                # more emoji for Instagram
+  min_words: 50
+  max_words: 90
+  hashtag_count: 6
+  emoji_count: 4                # more emoji for Instagram
 
 posting:
   # Cron: 9am UTC daily
