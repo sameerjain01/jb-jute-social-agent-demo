@@ -1,4 +1,4 @@
-name: 🌿 JuteVerde Social Agent
+name: 🧁 Sarah's Bakery Social Agent
 
 on:
   schedule:
@@ -49,8 +49,8 @@ jobs:
 
       - name: Commit infographic
         run: |
-          git config user.name "JuteVerde Agent"
-          git config user.email "noreply@juteverde.com"
+          git config user.name "SB Bakery Agent"
+          git config user.email "noreply@sarahsbakes.com"
           git add generated/*.png
           git diff --cached --quiet || git commit -m "chore: add infographic [skip ci]"
           git push
