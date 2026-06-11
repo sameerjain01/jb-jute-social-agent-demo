@@ -1,42 +1,43 @@
 company:
-  name: "JuteVerde"
-  tagline: "Sustainable Jute Solutions for Modern Business"
+  name: "Sarah's Bakery"
+  tagline: "Artisan pastries, baked fresh every morning"
   description: >
-    A small business specializing in sustainable jute products — including
-    packaging, bags, textiles, home décor, and agricultural supplies.
-    We help businesses replace plastic and synthetic materials with
-    biodegradable, ethically sourced jute alternatives.
-  website: "www.juteverde.com"
+    A neighborhood bakery in a college town near Philadelphia. We bake
+    everything from scratch daily — French-style pastries, seasonal
+    specials, celebration cakes, and premium gifting boxes. We serve
+    students who need a great start to the day and families who want
+    something worth celebrating.
+  website: "www.sarahsbakes.com"
   voice: >
-    Professional, warm, and educational. We are passionate experts, not
-    preachy activists. We use data and specifics. We respect our audience's
-    intelligence. We celebrate small wins as much as big ones.
+    Warm, specific, and real. We sound like the baker who actually made
+    your croissant — not a brand manager. We share what goes into our
+    work, celebrate the seasons, and talk to students and regulars like
+    they're already in the door. No fluff. Every word earns its place.
 
 content:
   # Formats cycle in order: educate → pitch → cta → educate → ...
   formats:
-    - educate   # Share insight/fact, end with a question
-    - pitch     # Problem → solution framing, jute as the answer
-    - cta       # Drive one concrete action
-  
-  platform: "linkedin"          # affects tone and length
-  min_words: 120
-  max_words: 220
-  hashtag_count: 4
-  emoji_count: 3                # approx, used naturally
+    - educate   # Share a baking fact, ingredient story, or process insight
+    - pitch     # Why fresh artisan beats chain/supermarket
+    - cta       # Drive one concrete action (visit, pre-order, DM)
+
+  platform: "instagram"
+  min_words: 80
+  max_words: 150
+  hashtag_count: 8
+  emoji_count: 5                # more emoji for Instagram
 
 posting:
-  # Cron: 9am UTC daily (change in workflow file to adjust timezone)
+  # Cron: 9am UTC daily
   cron: "0 9 * * *"
-  max_retries: 3                # attempts before skipping a cycle
-  # Don't reuse a topic if it appeared in the last N posts
+  max_retries: 3
   min_similarity_window: 8
 
 guardrail:
-  min_pass_score: 6             # posts scoring below this are rejected
-  # Topics that are ALWAYS off-limits regardless of generation
+  min_pass_score: 6
   banned_topics:
     - politics
     - religion
     - personal attacks
     - competitor names
+    - health claims or medical advice

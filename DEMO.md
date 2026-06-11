@@ -1,4 +1,4 @@
-# JuteVerde Social Media Agent — Operator Guide
+# Sarah's Bakery — Social Media Agent Operator Guide
 
 **For:** Anyone running or showing the demo
 **Time needed:** 5 minutes to demo, 2 minutes to set up
@@ -72,7 +72,7 @@ Point out:
 - Click **View Infographic** to open the image — it reflects the topic (ocean, forests, earth, or water)
 
 Say:
-> "It picked a topic it hasn't covered recently, wrote the post, had a second AI score it, and generated a matching infographic — all in under a minute. Every morning, without anyone touching it."
+> "It picked a topic it hasn't covered recently, wrote the post, had a second AI score it, and generated a matching seasonal infographic — all in under a minute. Every morning, without anyone touching it."
 
 ---
 
@@ -99,7 +99,7 @@ Say:
 > "This demo runs at zero cost. AI writing, quality check, image generation, scheduling, storage — all free. The only cost that comes in later is the platform API fee for direct posting, which depends on the platform."
 
 **"Can we change the topics or the brand voice?"**
-> "Yes — topics and brand voice are a simple text list. No coding. Change the list, save it, live on the next run."
+> "Yes — topics and brand voice are a simple text list. No coding. Swap the bakery name, the product list, the seasonal specials — change the list, save it, live on the next run."
 
 **"What if it fails one day?"**
 > "It skips that day. Nothing bad goes out. The failure shows as a red mark in GitHub so someone can check. It doesn't retry bad content — it waits for the next scheduled run."

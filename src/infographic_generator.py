@@ -2,7 +2,7 @@
 infographic_generator.py
 ------------------------
 Bold 1080x1080 split-panel infographic.
-Left = plastic/synthetic (bad). Right = jute (good).
+Left = chain/mass-produced (bad). Right = Sarah's Bakery (good).
 Emoji illustrations downloaded from Twemoji (open source).
 """
 
@@ -18,57 +18,57 @@ logger = logging.getLogger(__name__)
 W, H = 1080, 1080
 
 C = {
-    "bg":          (27,  67,  50),
-    "deco":        (22,  55,  41),
-    "card_bad":    (65,  28,  28),
-    "card_good":   (36,  87,  65),
-    "stat":        (149, 213, 178),
-    "white":       (255, 255, 255),
-    "subtext":     (216, 243, 220),
-    "cta":         (255, 225, 104),
-    "bad_text":    (255, 185, 185),
-    "good_text":   (216, 243, 220),
-    "red_title":   (220, 100, 100),
-    "green_title": (149, 213, 178),
-    "accent":      (82,  183, 136),
+    "bg":           (44,  26,  14),   # dark chocolate
+    "deco":         (26,  12,   6),   # deeper chocolate
+    "card_bad":     (45,  45,  45),   # cold industrial grey (chain store)
+    "card_good":    (122, 61,  21),   # warm caramel (Sarah's)
+    "stat":         (245, 222, 179),  # warm cream
+    "white":        (255, 255, 255),
+    "subtext":      (250, 235, 215),  # antique white
+    "cta":          (255, 182, 193),  # blush pink
+    "bad_text":     (176, 176, 176),  # cold grey
+    "good_text":    (250, 235, 215),  # warm cream
+    "bad_title":    (140, 140, 140),  # muted grey
+    "good_title":   (222, 184, 135),  # burlywood gold
+    "accent":       (198, 140,  58),  # warm amber
 }
 
 THEME_CONFIG = {
-    "ocean": {
-        "label":      "OCEAN",
-        "tagline":    "Plastic is drowning our oceans.\nJute is the life raft.",
-        "bad_emoji":  "1f40b",
-        "bad_title":  "PLASTIC WORLD",
-        "good_emoji": "1f422",
-        "good_title": "JUTE WORLD",
+    "spring": {
+        "label":      "SPRING",
+        "tagline":    "Chain stores thaw frozen pastries.\nWe bake with strawberries picked this week.",
+        "bad_emoji":  "1f3ed",   # factory
+        "bad_title":  "CHAIN STORE",
+        "good_emoji": "1f370",   # shortcake / strawberry tart
+        "good_title": "SARAH'S BAKERY",
     },
-    "earth": {
-        "label":      "EARTH",
-        "tagline":    "Plastic poisons our soil.\nJute gives it life back.",
-        "bad_emoji":  "1f637",
-        "bad_title":  "PLASTIC WORLD",
-        "good_emoji": "1f331",
-        "good_title": "JUTE WORLD",
+    "summer": {
+        "label":      "SUMMER",
+        "tagline":    "Supermarkets ship muffins from factories.\nOurs come out of the oven at 6am.",
+        "bad_emoji":  "1f9ca",   # ice cube (frozen)
+        "bad_title":  "CHAIN STORE",
+        "good_emoji": "1f9c1",   # cupcake
+        "good_title": "SARAH'S BAKERY",
     },
-    "trees": {
-        "label":      "FORESTS",
-        "tagline":    "Synthetic fibres destroy forests.\nJute regrows every season.",
-        "bad_emoji":  "1f3ed",
-        "bad_title":  "SYNTHETIC WORLD",
-        "good_emoji": "1f333",
-        "good_title": "JUTE WORLD",
+    "fall": {
+        "label":      "AUTUMN",
+        "tagline":    "Boxed pumpkin flavouring sits on shelves for months.\nOur rolls are gone by noon.",
+        "bad_emoji":  "1f4e6",   # box / packaged goods
+        "bad_title":  "CHAIN STORE",
+        "good_emoji": "1f383",   # jack-o-lantern / pumpkin
+        "good_title": "SARAH'S BAKERY",
     },
-    "water": {
-        "label":      "WATER",
-        "tagline":    "Cotton farming empties rivers.\nJute uses a fraction of the water.",
-        "bad_emoji":  "1f480",
-        "bad_title":  "COTTON WORLD",
-        "good_emoji": "1f4a7",
-        "good_title": "JUTE WORLD",
+    "winter": {
+        "label":      "WINTER",
+        "tagline":    "Pre-made chains cut every corner.\nWe make every cookie by hand.",
+        "bad_emoji":  "1f6d2",   # shopping cart / supermarket
+        "bad_title":  "CHAIN STORE",
+        "good_emoji": "1f36a",   # cookie
+        "good_title": "SARAH'S BAKERY",
     },
 }
 
-THEME_ORDER  = ["ocean", "earth", "trees", "water"]
+THEME_ORDER  = ["spring", "summer", "fall", "winter"]
 FONT_BOLD    = "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf"
 FONT_REGULAR = "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf"
 EMOJI_SIZE   = 150
@@ -109,8 +109,8 @@ class InfographicGenerator:
     def generate(self, data: dict, run_id: str) -> str:
         canvas = Image.new("RGB", (W, H), C["bg"])
         draw   = ImageDraw.Draw(canvas)
-        theme  = data.get("theme", "earth")
-        tcfg   = THEME_CONFIG.get(theme, THEME_CONFIG["earth"])
+        theme  = data.get("theme", "summer")
+        tcfg   = THEME_CONFIG.get(theme, THEME_CONFIG["summer"])
 
         self._deco_bg(draw)
         self._header(draw, tcfg)
@@ -129,7 +129,7 @@ class InfographicGenerator:
         draw.ellipse([(-120, 820), (180, 1120)], fill=C["deco"])
 
     def _header(self, draw, tcfg):
-        draw.text((50, 42), "JuteVerde", font=_font(FONT_BOLD, 56), fill=C["white"])
+        draw.text((50, 42), "Sarah's Bakery", font=_font(FONT_BOLD, 52), fill=C["white"])
         f = _font(FONT_REGULAR, 26)
         label = tcfg["label"]
         bbox = draw.textbbox((0, 0), label, font=f)
@@ -163,8 +163,8 @@ class InfographicGenerator:
         draw.rounded_rectangle([(MID+PAD, TOP), (W-PAD, BOT)], radius=16, fill=C["card_good"])
 
         f_title = _font(FONT_BOLD, 24)
-        self._panel_center_text(draw, tcfg["bad_title"],  PAD, MID-PAD, TOP+16, f_title, C["red_title"])
-        self._panel_center_text(draw, tcfg["good_title"], MID+PAD, W-PAD, TOP+16, f_title, C["green_title"])
+        self._panel_center_text(draw, tcfg["bad_title"],  PAD, MID-PAD, TOP+16, f_title, C["bad_title"])
+        self._panel_center_text(draw, tcfg["good_title"], MID+PAD, W-PAD, TOP+16, f_title, C["good_title"])
 
         bad_img  = _get_emoji(tcfg["bad_emoji"])
         good_img = _get_emoji(tcfg["good_emoji"])
@@ -174,25 +174,25 @@ class InfographicGenerator:
             ex = (PAD + MID - PAD) // 2 - EMOJI_SIZE // 2
             canvas.paste(bad_img, (ex, ey), bad_img)
         else:
-            self._panel_center_text(draw, "✕", PAD, MID-PAD, ey+40, _font(FONT_BOLD, 80), C["red_title"])
+            self._panel_center_text(draw, "✕", PAD, MID-PAD, ey+40, _font(FONT_BOLD, 80), C["bad_title"])
 
         if good_img:
             ex = (MID + PAD + W - PAD) // 2 - EMOJI_SIZE // 2
             canvas.paste(good_img, (ex, ey), good_img)
         else:
-            self._panel_center_text(draw, "✓", MID+PAD, W-PAD, ey+40, _font(FONT_BOLD, 80), C["green_title"])
+            self._panel_center_text(draw, "✓", MID+PAD, W-PAD, ey+40, _font(FONT_BOLD, 80), C["good_title"])
 
         f_b  = _font(FONT_REGULAR, 23)
         by   = ey + EMOJI_SIZE + 18
 
         for pt in data.get("bad_points", [])[:3]:
-            draw.text((PAD+16, by), "✕", font=f_b, fill=C["red_title"])
+            draw.text((PAD+16, by), "✕", font=f_b, fill=C["bad_title"])
             by = self._left_text(draw, pt, PAD+40, by, f_b, C["bad_text"], MID-PAD-12)
             by += 12
 
         by = ey + EMOJI_SIZE + 18
         for pt in data.get("good_points", [])[:3]:
-            draw.text((MID+PAD+16, by), "✓", font=f_b, fill=C["green_title"])
+            draw.text((MID+PAD+16, by), "✓", font=f_b, fill=C["good_title"])
             by = self._left_text(draw, pt, MID+PAD+40, by, f_b, C["good_text"], W-PAD-12)
             by += 12
 
@@ -203,8 +203,8 @@ class InfographicGenerator:
     def _footer(self, draw, data):
         draw.rectangle([(0, 860), (W, H)], fill=C["deco"])
         f = _font(FONT_REGULAR, 22)
-        draw.text((50, 876), "juteverde.com", font=f, fill=C["stat"])
-        draw.text((50, 910), data.get("hashtags", "#JuteVerde #Sustainability"), font=f, fill=C["subtext"])
+        draw.text((50, 876), "sarahsbakes.com", font=f, fill=C["stat"])
+        draw.text((50, 910), data.get("hashtags", "#SarahsBakery #FreshBaked"), font=f, fill=C["subtext"])
 
     def _panel_center_text(self, draw, text, x1, x2, y, font, color):
         bbox = draw.textbbox((0, 0), text, font=font)

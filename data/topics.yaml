@@ -1,100 +1,108 @@
 topics:
+  # --- Student-focused ---
   - id: T01
-    name: "Jute vs plastic bags: the environmental numbers"
-    category: education
-    hook: "How many plastic bags does one jute bag replace?"
+    name: "The best pastry + coffee combo under $6 for a college morning"
+    category: pitch
+    hook: "Students have a budget. We worked backwards from it."
 
   - id: T02
-    name: "Carbon sequestration: how jute farming fights climate change"
-    category: education
-    hook: "Jute absorbs CO₂ at a remarkable rate during its 4-month growing cycle"
+    name: "Why a warm croissant at 8am beats the dining hall every time"
+    category: educate
+    hook: "It's not about the pastry — it's about how you start the day"
 
   - id: T03
-    name: "Why jute packaging is winning in B2B supply chains"
-    category: pitch
-    hook: "Procurement teams are switching — here's what's driving the decision"
+    name: "Study fuel: what students actually want from their bakery stop"
+    category: educate
+    hook: "We asked. The answers changed our daily menu."
 
   - id: T04
-    name: "Jute in sustainable fashion and textiles"
-    category: education
-    hook: "From burlap to high fashion — jute's textile transformation"
-
-  - id: T05
-    name: "How to make your packaging ESG-compliant without breaking budget"
+    name: "The 'treat yourself' habit — why college students keep coming back"
     category: pitch
-    hook: "Sustainability audits are asking harder questions about packaging"
+    hook: "Turns out a $4 muffin on a hard morning is the smartest $4 you'll spend"
+
+  # --- Seasonal: Summer ---
+  - id: T05
+    name: "Fresh blueberry muffins vs frozen: the difference you taste immediately"
+    category: educate
+    hook: "Fresh blueberries picked this week. Not a mix. Not frozen. Here's why it matters."
 
   - id: T06
-    name: "Fair trade jute sourcing from Bangladesh and India"
-    category: education
-    hook: "The farmers behind the fiber — and why their story matters to your brand"
+    name: "Peach danishes are back — what goes into making them from scratch"
+    category: educate
+    hook: "Stone fruit season lasts 6 weeks. We pack all of it into every bite."
 
+  # --- Seasonal: Fall ---
   - id: T07
-    name: "Jute in home décor: the interior design shift nobody talks about"
-    category: education
-    hook: "Designers are specifying natural fibers — and jute leads the list"
+    name: "Pumpkin spice rolls: what separates ours from the chain version"
+    category: educate
+    hook: "We start with a real pumpkin. Not a flavouring. Here's what that actually looks like."
 
   - id: T08
-    name: "Circular economy in action: what happens to jute after use"
-    category: education
-    hook: "Composting, mulching, or soil enrichment — jute closes the loop"
+    name: "Apple cinnamon turnovers — why fall is our favourite season to bake"
+    category: educate
+    hook: "The orchard down the road delivers Tuesdays. We bake Wednesdays."
 
+  # --- Seasonal: Winter ---
   - id: T09
-    name: "Greenwashing vs genuine sustainability: how to tell the difference"
-    category: education
-    hook: "3 questions to ask before trusting any 'eco-friendly' claim"
+    name: "Hot cocoa croissants: the winter item people ask about all year"
+    category: pitch
+    hook: "We only make them from November. That's the point."
 
   - id: T10
-    name: "Jute grow bags and agricultural applications"
-    category: education
-    hook: "Nurseries and urban farms are replacing plastic pots — here's why"
+    name: "Spiced ginger cookies: the recipe we've been refining since year one"
+    category: educate
+    hook: "Three types of ginger. One small tweak every December."
 
+  # --- Seasonal: Spring ---
   - id: T11
-    name: "Water and land: jute vs cotton resource comparison"
-    category: education
-    hook: "Cotton uses 20,000 litres of water per kg. Jute uses a fraction of that"
+    name: "Strawberry shortcake is back — and we use real local strawberries"
+    category: pitch
+    hook: "First week of June. Limited batches. Here's how to get yours."
 
   - id: T12
-    name: "How switching to jute packaging can improve your brand perception"
-    category: pitch
-    hook: "Customers notice. Research shows sustainable packaging drives loyalty"
+    name: "Lemon tarts: the most technically demanding thing we make all year"
+    category: educate
+    hook: "The curd has to be right. The shell has to be right. At the same time."
 
+  # --- Premium pastries ---
   - id: T13
-    name: "Jute geotextiles for erosion control and landscaping"
-    category: education
-    hook: "Civil engineers and landscapers have been using this for decades"
+    name: "Why our almond croissants have a 3-hour wait some mornings"
+    category: educate
+    hook: "We make 24. When they're gone, they're gone. Here's what goes into each one."
 
   - id: T14
-    name: "The hidden cost of single-use plastic for small businesses"
-    category: pitch
-    hook: "Regulation risk, consumer backlash, disposal costs — it adds up fast"
+    name: "What goes into a layered celebration cake — and why it takes a full day"
+    category: educate
+    hook: "Six layers. Three fillings. One day of work. No shortcuts."
 
   - id: T15
-    name: "Getting your first sustainability certification as a small business"
-    category: cta
-    hook: "B Corp, ISO 14001, or just starting with a carbon audit — your path"
+    name: "French-style fruit tarts: the pastry you won't find at a chain"
+    category: pitch
+    hook: "Pastry cream, seasonal fruit, a shell that actually holds. You have to make it yourself."
 
   - id: T16
-    name: "Consumer demand data: what buyers actually want from packaging in 2024"
-    category: education
-    hook: "73% of global consumers say they'd pay more for sustainable packaging"
+    name: "Chocolate ganache éclairs: why we only make them twice a week"
+    category: educate
+    hook: "They don't keep. So we don't make them in advance. That's the whole idea."
 
+  # --- Gifting ---
   - id: T17
-    name: "Jute rope and industrial applications beyond packaging"
-    category: education
-    hook: "Construction, marine, agriculture — jute's industrial versatility"
+    name: "The pastry gift box: why it beats flowers for almost any occasion"
+    category: pitch
+    hook: "Flowers are gone in a week. A box of fresh pastries is gone in 20 minutes — and people remember it."
 
   - id: T18
-    name: "Building a sustainability story your customers will actually believe"
-    category: pitch
-    hook: "Authenticity beats perfection. Here's how small businesses win this"
-
-  - id: T19
-    name: "How to calculate your packaging's carbon footprint (and reduce it)"
+    name: "Graduation season: why you should pre-order your custom cake now"
     category: cta
-    hook: "A simple framework any business can use today"
+    hook: "May fills up by April. We take 8 custom orders per week. That's it."
+
+  # --- Behind the scenes ---
+  - id: T19
+    name: "4am: what happens before the first customer walks in"
+    category: educate
+    hook: "The oven goes on at 4. Doors open at 7. Here's what happens in between."
 
   - id: T20
-    name: "Jute innovation: new product categories emerging in 2024"
-    category: education
-    hook: "Composite materials, biomedical applications, smart textiles with jute"
+    name: "Artisan vs. mass-produced: the numbers that change how you think about your morning pastry"
+    category: educate
+    hook: "Chain bakeries bake once a day in a factory. We bake in three shifts. The difference is measurable."

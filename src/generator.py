@@ -1,7 +1,7 @@
 """
 generator.py
 ------------
-Calls Groq to write a LinkedIn post given a topic and format type.
+Calls Groq to write an Instagram post and infographic content for Sarah's Bakery.
 Format types:  educate | pitch | cta
 """
 
@@ -17,26 +17,26 @@ FORMAT_INSTRUCTIONS = {
     "educate": """
 You are writing an EDUCATIONAL post.
 Structure:
-  1. Open with a surprising fact or statistic (the hook — 1 sentence)
-  2. Explain the insight in 3-4 short paragraphs
-  3. Connect it to a real business implication
-  4. End with a thought-provoking question to spark comments
+  1. Open with one surprising or specific fact that stops the scroll (1 sentence)
+  2. Explain the insight in 2-3 short punchy paragraphs — paint a picture
+  3. Connect it to what makes a fresh artisan bakery different
+  4. End with a question or observation that invites a reply
 """,
     "pitch": """
 You are writing a PITCH post.
 Structure:
-  1. Open by naming a pain point your audience recognises (1-2 sentences)
-  2. Agitate: why this problem is getting worse or costlier
-  3. Introduce jute products as the solution — be specific, not vague
-  4. End with a single sentence invitation (soft CTA: "DM us" or "see how we can help")
+  1. Open by naming something the reader already feels (a morning routine, a craving, a disappointment) — 1 sentence
+  2. Show why chain or supermarket alternatives fall short — be specific, not vague
+  3. Introduce Sarah's Bakery as the real alternative — show don't tell
+  4. End with a soft invite: "come find us", "DM to pre-order", "we open at 7"
 """,
     "cta": """
 You are writing a CALL-TO-ACTION post.
 Structure:
-  1. Open with a compelling reason to act NOW (urgency or opportunity)
-  2. State exactly ONE clear action for the reader to take
-  3. Briefly explain why this action is worth their time
-  4. Make the CTA prominent in the final line (e.g. "👇 Book a free 20-min call")
+  1. Open with a reason to act now — limited batch, seasonal item ending, pre-order deadline
+  2. State ONE clear action (visit us, DM to order, tag a friend who needs this)
+  3. Give them a quick reason why it's worth it
+  4. Make the action prominent in the final line
 """,
 }
 
@@ -57,43 +57,44 @@ class ContentGenerator:
             model=self.MODEL,
             messages=[{"role": "user", "content": prompt}],
             temperature=0.85,
-            max_tokens=600,
+            max_tokens=500,
         )
         return response.choices[0].message.content.strip()
 
     def generate_infographic_data(self, topic: str, theme: str) -> dict:
-        prompt = f"""Create content for a split-panel social media infographic for {self.company['name']}.
+        prompt = f"""Create content for a split-panel Instagram infographic for {self.company['name']}.
 
 Topic: {topic}
-Environmental theme: {theme}
+Seasonal theme: {theme}
 
-The infographic shows two sides: LEFT = the problem (plastic/synthetic world), RIGHT = the solution (jute world).
+The infographic shows two sides: LEFT = chain store / mass-produced (the problem), RIGHT = Sarah's Bakery (the solution).
 
 RULES:
-- stat: ONE shocking number displayed very large (e.g. "8M+" "88%" "400yrs" "2Bn")
-- tagline: 2 short lines — first line names the crisis, second names the jute answer
-- bad_points: 3 specific damaging facts about plastic/synthetics related to the theme — include numbers
-- good_points: 3 specific jute benefits that directly counter each bad point — include numbers
-- cta: max 5 words, punchy, action-oriented
+- stat: ONE striking number displayed very large (e.g. "72hrs" "3x" "6am" "0" "48hrs")
+- stat_description: what this stat means, max 8 words — make it land
+- tagline: 2 short lines — first line names the chain-store problem, second names the artisan answer
+- bad_points: 3 specific facts about chain/supermarket baked goods — be specific, include numbers or timeframes
+- good_points: 3 specific Sarah's Bakery facts that directly counter each bad point — include numbers or timeframes
+- cta: max 5 words, punchy, action-oriented (e.g. "Order before 8am", "Come find us today")
 - NO vague claims. Every point must be specific and visual.
 
 Return ONLY valid JSON:
 {{
-  "stat": "one shocking figure",
+  "stat": "one striking figure",
   "stat_description": "what this stat means, max 8 words",
-  "tagline": "line 1 — the crisis\\nline 2 — jute as the answer",
+  "tagline": "line 1 — the chain-store problem\\nline 2 — the artisan answer",
   "bad_points": [
-    "specific damaging fact with number",
-    "specific damaging fact with number",
-    "specific damaging fact with number"
+    "specific chain-store fact with number or timeframe",
+    "specific chain-store fact with number or timeframe",
+    "specific chain-store fact with number or timeframe"
   ],
   "good_points": [
-    "specific jute benefit with number",
-    "specific jute benefit with number",
-    "specific jute benefit with number"
+    "specific Sarah's Bakery fact with number or timeframe",
+    "specific Sarah's Bakery fact with number or timeframe",
+    "specific Sarah's Bakery fact with number or timeframe"
   ],
   "cta": "punchy action phrase max 5 words",
-  "hashtags": "#Tag1 #Tag2 #Tag3 #Tag4"
+  "hashtags": "#SarahsBakery #FreshBaked #Tag3 #Tag4 #Tag5 #Tag6 #Tag7 #Tag8"
 }}"""
 
         response = self.client.chat.completions.create(
@@ -111,9 +112,9 @@ Return ONLY valid JSON:
     def _build_prompt(self, topic: str, format_type: str) -> str:
         fmt_instruction = FORMAT_INSTRUCTIONS.get(format_type, FORMAT_INSTRUCTIONS["educate"])
 
-        return f"""You are the LinkedIn content writer for {self.company['name']}.
+        return f"""You are the Instagram content writer for {self.company['name']}.
 
-COMPANY CONTEXT:
+BAKERY CONTEXT:
   Name: {self.company['name']}
   Tagline: {self.company['tagline']}
   What we do: {self.company['description']}
@@ -121,26 +122,27 @@ COMPANY CONTEXT:
   Brand voice: {self.company['voice']}
 
 YOUR TASK:
-  Write a LinkedIn post about this topic: "{topic}"
+  Write an Instagram post about this topic: "{topic}"
 
 POST FORMAT:
 {fmt_instruction}
 
 WRITING RULES:
   - Length: {self.content_cfg['min_words']}–{self.content_cfg['max_words']} words
-  - Use {self.content_cfg['emoji_count']} emojis placed naturally
+  - Use {self.content_cfg['emoji_count']} emojis placed naturally — not at the start of every line
   - Short paragraphs — 2 sentences max each
   - End with exactly {self.content_cfg['hashtag_count']} hashtags on their own line
-  - Every stat or number must be specific and realistic
-  - Never mention competitor brand names or make political statements
+  - Every claim must be specific and real — no vague generalisations
+  - Never mention competitor names
 
-TONE — write like a knowledgeable founder talking to a peer, not a marketer:
-  - First line must STOP THE SCROLL: use a shocking stat, a bold claim, or a direct challenge
-  - Be specific and visual — paint a picture, don't summarise
-  - Conversational and direct — say "you" not "businesses"
-  - No corporate speak. BANNED phrases: "prioritize sustainability", "it's essential to",
-    "enhance your brand", "in today's world", "take the first step", "sustainable future",
-    "eco-conscious consumers", "it's no secret", "as we all know"
+TONE — write like the baker who actually made it, not a social media manager:
+  - First line must stop the scroll: a specific detail, a surprising number, or a vivid image
+  - Be concrete and sensory — describe what you smell, see, taste
+  - Talk directly to the reader: "you", not "our customers"
+  - Short sentences. Real words. No filler.
+  - BANNED phrases: "made with love", "artisan quality", "farm to table", "guilt-free indulgence",
+    "treat yourself to", "perfect for any occasion", "baked to perfection", "a little something special",
+    "we take pride in", "quality ingredients", "passion for baking"
 
 OUTPUT:
   Return ONLY the post text. No preamble, no "Here is your post:", no markdown.
