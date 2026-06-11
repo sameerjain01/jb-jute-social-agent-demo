@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@400;500;600;700&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Inter:wght@400;500;600;700;800&display=swap');
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -11,32 +11,32 @@
     width: 1080px;
     height: 1080px;
     overflow: hidden;
-    font-family: 'Inter', sans-serif;
+    background: #fdf6ee;
   }
 
   .canvas {
     width: 1080px;
     height: 1080px;
-    background: linear-gradient(150deg, #2c1810 0%, #1a0e08 55%, #2c1810 100%);
-    position: relative;
+    background: linear-gradient(160deg, #fdf6ee 0%, #faebd7 50%, #fdf0e0 100%);
     display: flex;
     flex-direction: column;
+    position: relative;
   }
 
-  /* Soft decorative glows */
-  .deco-top {
+  /* Soft background blobs */
+  .blob1 {
     position: absolute;
     width: 500px; height: 500px;
     border-radius: 50%;
-    background: radial-gradient(circle, rgba(255,182,193,0.08) 0%, transparent 65%);
+    background: radial-gradient(circle, rgba(220,100,120,0.07) 0%, transparent 70%);
     top: -150px; right: -100px;
     pointer-events: none;
   }
-  .deco-bottom {
+  .blob2 {
     position: absolute;
-    width: 350px; height: 350px;
+    width: 400px; height: 400px;
     border-radius: 50%;
-    background: radial-gradient(circle, rgba(198,140,58,0.1) 0%, transparent 65%);
+    background: radial-gradient(circle, rgba(198,140,58,0.07) 0%, transparent 70%);
     bottom: -100px; left: -80px;
     pointer-events: none;
   }
@@ -46,73 +46,95 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 34px 50px 0;
+    padding: 32px 48px 0;
     position: relative;
     z-index: 2;
   }
-  .brand-name {
-    font-family: 'Playfair Display', serif;
-    font-size: 44px;
-    font-weight: 900;
-    color: #ffffff;
-    letter-spacing: -0.5px;
+  .brand {
+    display: flex;
+    flex-direction: column;
   }
-  .brand-name span { color: #e8a0b4; }
-  .season-badge {
-    background: rgba(232,160,180,0.15);
-    border: 1px solid rgba(232,160,180,0.35);
-    color: #e8a0b4;
+  .brand-name {
+    font-family: 'Playfair Display', 'Palatino Linotype', serif;
+    font-size: 38px;
+    font-weight: 900;
+    color: #2c1810;
+    letter-spacing: -0.5px;
+    line-height: 1;
+  }
+  .brand-name em {
+    font-style: italic;
+    color: #c0334d;
+  }
+  .brand-sub {
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    color: #c68c3a;
+    text-transform: uppercase;
+    margin-top: 4px;
+  }
+  .season-pill {
+    background: #c0334d;
+    color: #ffffff;
+    font-family: 'Inter', sans-serif;
     font-size: 12px;
     font-weight: 700;
-    letter-spacing: 2.5px;
-    padding: 7px 18px;
-    border-radius: 20px;
+    letter-spacing: 2px;
     text-transform: uppercase;
+    padding: 8px 20px;
+    border-radius: 30px;
   }
 
+  /* ── Accent line ── */
   .accent-line {
-    height: 2px;
-    background: linear-gradient(90deg, transparent 0%, #e8a0b4 30%, #c68c3a 70%, transparent 100%);
-    margin: 18px 50px 0;
+    height: 3px;
+    background: linear-gradient(90deg, #c0334d 0%, #e8956d 50%, #c68c3a 100%);
+    margin: 16px 48px 0;
+    border-radius: 2px;
     position: relative;
     z-index: 2;
   }
 
   /* ── Tagline ── */
-  .tagline-block {
-    padding: 16px 50px 0;
+  .tagline {
+    padding: 14px 48px 0;
     position: relative;
     z-index: 2;
   }
   .tagline-line {
-    font-size: 21px;
+    font-family: 'Inter', sans-serif;
+    font-size: 20px;
     font-weight: 500;
-    color: rgba(250,235,215,0.75);
-    line-height: 1.55;
+    color: #5c3d2e;
+    line-height: 1.5;
+    opacity: 0.85;
   }
 
   /* ── Stat ── */
   .stat-block {
     text-align: center;
-    padding: 10px 50px 0;
+    padding: 10px 48px 0;
     position: relative;
     z-index: 2;
   }
   .stat-number {
-    font-family: 'Playfair Display', serif;
-    font-size: 108px;
+    font-family: 'Playfair Display', 'Palatino Linotype', serif;
+    font-size: 116px;
     font-weight: 900;
-    color: #f5deb3;
+    color: #c0334d;
     line-height: 1;
-    letter-spacing: -3px;
+    letter-spacing: -4px;
   }
-  .stat-number.long { font-size: 78px; }
+  .stat-number.long { font-size: 84px; letter-spacing: -2px; }
   .stat-desc {
-    font-size: 19px;
-    font-weight: 500;
-    color: rgba(245,222,179,0.6);
-    margin-top: 3px;
-    letter-spacing: 0.2px;
+    font-family: 'Inter', sans-serif;
+    font-size: 18px;
+    font-weight: 600;
+    color: #8b5e3c;
+    margin-top: 2px;
+    letter-spacing: 0.3px;
   }
 
   /* ── Split panels ── */
@@ -120,105 +142,110 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 14px;
-    padding: 14px 20px 0;
+    padding: 14px 18px 0;
     flex: 1;
     position: relative;
     z-index: 2;
   }
   .panel {
-    border-radius: 22px;
-    padding: 20px 22px;
+    border-radius: 24px;
+    padding: 20px 22px 18px;
     display: flex;
     flex-direction: column;
+    box-shadow: 0 4px 20px rgba(44,24,16,0.08);
   }
   .panel-bad {
-    background: linear-gradient(160deg, #2a2a2a 0%, #181818 100%);
-    border: 1px solid rgba(255,255,255,0.05);
+    background: linear-gradient(155deg, #f0ece8 0%, #e8e2dc 100%);
+    border: 1px solid rgba(44,24,16,0.08);
   }
   .panel-good {
-    background: linear-gradient(160deg, #6b2d4a 0%, #3d1828 100%);
-    border: 1px solid rgba(232,160,180,0.22);
+    background: linear-gradient(155deg, #fff0f3 0%, #fde4eb 100%);
+    border: 1px solid rgba(192,51,77,0.15);
   }
 
   .panel-title {
-    font-size: 12px;
-    font-weight: 700;
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    font-weight: 800;
     letter-spacing: 2.5px;
     text-transform: uppercase;
     text-align: center;
     margin-bottom: 10px;
   }
-  .panel-bad .panel-title { color: #777777; }
-  .panel-good .panel-title { color: #e8a0b4; }
+  .panel-bad  .panel-title { color: #999088; }
+  .panel-good .panel-title { color: #c0334d; }
 
   .emoji-row {
     text-align: center;
-    font-size: 70px;
+    font-size: 80px;
     line-height: 1;
-    margin-bottom: 12px;
+    margin-bottom: 14px;
   }
 
-  .points { display: flex; flex-direction: column; gap: 9px; flex: 1; }
+  .points { display: flex; flex-direction: column; gap: 10px; flex: 1; }
   .point {
     display: flex;
     align-items: flex-start;
     gap: 9px;
-    font-size: 17px;
+    font-family: 'Inter', sans-serif;
+    font-size: 16.5px;
     font-weight: 500;
     line-height: 1.4;
   }
-  .point-icon { flex-shrink: 0; margin-top: 2px; font-style: normal; font-size: 15px; }
-  .panel-bad .point       { color: #999999; }
-  .panel-bad .point-icon  { color: #555555; }
-  .panel-good .point      { color: #faebd7; }
-  .panel-good .point-icon { color: #e8a0b4; }
+  .icon { flex-shrink: 0; font-style: normal; font-size: 14px; margin-top: 3px; font-weight: 700; }
+  .panel-bad  .point { color: #7a6e68; }
+  .panel-bad  .icon  { color: #b0a49c; }
+  .panel-good .point { color: #4a1f2e; }
+  .panel-good .icon  { color: #c0334d; }
 
-  /* ── CTA ── */
+  /* ── CTA bar ── */
   .cta-bar {
-    background: linear-gradient(90deg, transparent 0%, rgba(232,160,180,0.18) 50%, transparent 100%);
-    border-top: 1px solid rgba(232,160,180,0.25);
-    border-bottom: 1px solid rgba(232,160,180,0.25);
+    background: linear-gradient(90deg, #c0334d 0%, #d4536c 50%, #c0334d 100%);
     text-align: center;
-    padding: 13px 50px;
-    margin-top: 13px;
+    padding: 14px 48px;
+    margin-top: 14px;
     position: relative;
     z-index: 2;
   }
   .cta-text {
-    font-family: 'Playfair Display', serif;
+    font-family: 'Playfair Display', 'Palatino Linotype', serif;
     font-size: 30px;
     font-weight: 700;
-    color: #e8a0b4;
+    font-style: italic;
+    color: #ffffff;
     letter-spacing: 0.3px;
   }
 
   /* ── Footer ── */
   .footer {
-    background: rgba(0,0,0,0.45);
-    padding: 13px 50px;
+    background: #2c1810;
+    padding: 13px 48px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     position: relative;
     z-index: 2;
   }
-  .footer-url  { font-size: 17px; font-weight: 600; color: #c68c3a; letter-spacing: 0.4px; }
-  .footer-tags { font-size: 13px; color: rgba(245,222,179,0.4); font-weight: 400; }
+  .footer-url  { font-family: 'Inter', sans-serif; font-size: 16px; font-weight: 600; color: #c68c3a; }
+  .footer-tags { font-family: 'Inter', sans-serif; font-size: 13px; color: rgba(253,246,238,0.45); }
 </style>
 </head>
 <body>
 <div class="canvas">
-  <div class="deco-top"></div>
-  <div class="deco-bottom"></div>
+  <div class="blob1"></div>
+  <div class="blob2"></div>
 
   <div class="header">
-    <div class="brand-name">Sarah's <span>Bakery</span></div>
-    <div class="season-badge">{{SEASON}}</div>
+    <div class="brand">
+      <div class="brand-name">Sarah's <em>Bakery</em></div>
+      <div class="brand-sub">Baked fresh every morning</div>
+    </div>
+    <div class="season-pill">{{SEASON}}</div>
   </div>
 
   <div class="accent-line"></div>
 
-  <div class="tagline-block">
+  <div class="tagline">
     <div class="tagline-line">{{TAGLINE_LINE1}}</div>
     <div class="tagline-line">{{TAGLINE_LINE2}}</div>
   </div>
@@ -233,18 +260,18 @@
       <div class="panel-title">Chain Store</div>
       <div class="emoji-row">{{BAD_EMOJI}}</div>
       <div class="points">
-        <div class="point"><i class="point-icon">✕</i> {{BAD_1}}</div>
-        <div class="point"><i class="point-icon">✕</i> {{BAD_2}}</div>
-        <div class="point"><i class="point-icon">✕</i> {{BAD_3}}</div>
+        <div class="point"><i class="icon">✕</i>{{BAD_1}}</div>
+        <div class="point"><i class="icon">✕</i>{{BAD_2}}</div>
+        <div class="point"><i class="icon">✕</i>{{BAD_3}}</div>
       </div>
     </div>
     <div class="panel panel-good">
       <div class="panel-title">Sarah's Bakery</div>
       <div class="emoji-row">{{GOOD_EMOJI}}</div>
       <div class="points">
-        <div class="point"><i class="point-icon">✓</i> {{GOOD_1}}</div>
-        <div class="point"><i class="point-icon">✓</i> {{GOOD_2}}</div>
-        <div class="point"><i class="point-icon">✓</i> {{GOOD_3}}</div>
+        <div class="point"><i class="icon">✓</i>{{GOOD_1}}</div>
+        <div class="point"><i class="icon">✓</i>{{GOOD_2}}</div>
+        <div class="point"><i class="icon">✓</i>{{GOOD_3}}</div>
       </div>
     </div>
   </div>
