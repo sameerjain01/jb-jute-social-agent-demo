@@ -19,7 +19,7 @@ class TopicSelector:
         self.topics = topics  # list of topic dicts from topics.yaml
         self.window = config["posting"]["min_similarity_window"]
 
-    def select(self, recent_posts: list) -> tuple[str, str]:
+    def select(self, recent_posts: list) -> tuple[str, str, str]:
         """
         Returns (topic_name, format_type).
 
@@ -53,7 +53,7 @@ class TopicSelector:
         last_format = recent_posts[0]["format"] if recent_posts else None
         next_format = self._next_format(last_format)
 
-        return chosen_topic["name"], next_format
+        return chosen_topic["name"], next_format, chosen_topic.get("emotion", "")
 
     def _next_format(self, last_format: str | None) -> str:
         if last_format is None or last_format not in self.FORMAT_CYCLE:

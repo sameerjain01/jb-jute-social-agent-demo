@@ -13,6 +13,32 @@ from groq import Groq
 
 logger = logging.getLogger(__name__)
 
+EMOTIONAL_HOOKS = {
+    "nostalgia":   "This topic should trigger NOSTALGIA. Tap into the smell of a grandmother's kitchen, "
+                   "childhood Saturday mornings, or a recipe passed down untouched. The reader should "
+                   "feel pulled back to a specific warm memory they did not know they were carrying.",
+    "comfort":     "This topic should deliver COMFORT. Think rainy day, long week, sanctuary. "
+                   "Warmth, softness, and the feeling of being held. The bakery is a safe place.",
+    "celebration": "This topic should radiate CELEBRATION. Joy, pride, feeling seen and special. "
+                   "A birthday cake is love made physical. Make the reader feel that.",
+    "pride":       "This topic should evoke PRIDE and ACHIEVEMENT. Relief after hard work, the feeling "
+                   "of a chapter closing and a new one opening. Something earned.",
+    "grief":       "This topic requires GENTLENESS and CARE. Food heals when words fail. "
+                   "Write with quiet warmth — no performance, no brightness. Just presence.",
+    "love":        "This topic is about LOVE and COMMITMENT. Romance, shared history, "
+                   "the private intimacy of two people becoming one. Specific and tender.",
+    "apology":     "This topic is about VULNERABILITY and HEALING. A pastry as a peace offering — "
+                   "it says 'I know you, I am sorry, and I tried.' Honest and soft.",
+    "wonder":      "This topic should spark CHILDLIKE WONDER. Looking through the glass case, "
+                   "watching the baker work, the pastry case as a toy shop window. Awaken curiosity.",
+    "community":   "This topic is about BELONGING. The third place, knowing the baker's name, "
+                   "a neighbourhood hub. People need places where they are known.",
+    "military":    "This topic carries DEEP GRATITUDE and LONGING FOR HOME. A care package crossing "
+                   "6,000 miles. The smell of a cookie as an emotional lifeline. Write with reverence.",
+    "americana":   "This topic is about COLLECTIVE PRIDE and SUMMER JOY. Flag cakes, "
+                   "apple pie, fireworks on the lawn. Freedom celebrated at the table, together.",
+}
+
 FORMAT_INSTRUCTIONS = {
     "educate": """
 You are writing an EDUCATIONAL post.
@@ -49,8 +75,8 @@ class ContentGenerator:
         self.company = config["company"]
         self.content_cfg = config["content"]
 
-    def generate(self, topic: str, format_type: str) -> str:
-        prompt = self._build_prompt(topic, format_type)
+    def generate(self, topic: str, format_type: str, emotion: str = "") -> str:
+        prompt = self._build_prompt(topic, format_type, emotion)
         logger.debug(f"Prompt length: {len(prompt)} chars")
 
         response = self.client.chat.completions.create(
@@ -109,8 +135,9 @@ Return ONLY valid JSON:
         data["theme"] = theme
         return data
 
-    def _build_prompt(self, topic: str, format_type: str) -> str:
+    def _build_prompt(self, topic: str, format_type: str, emotion: str = "") -> str:
         fmt_instruction = FORMAT_INSTRUCTIONS.get(format_type, FORMAT_INSTRUCTIONS["educate"])
+        emotional_instruction = EMOTIONAL_HOOKS.get(emotion, "")
 
         return f"""You are the Instagram content writer for {self.company['name']}.
 
@@ -134,6 +161,9 @@ WRITING RULES:
   - End with exactly {self.content_cfg['hashtag_count']} hashtags on their own line
   - Every claim must be specific and real — no vague generalisations
   - Never mention competitor names
+
+EMOTIONAL DIRECTION:
+{emotional_instruction if emotional_instruction else "Write with warmth and specificity. Tap into memory, comfort, or wonder as the topic suggests."}
 
 TONE — write like the baker who actually made it, not a social media manager:
   - First line must stop the scroll: a specific detail, a surprising number, or a vivid sensory image

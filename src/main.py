@@ -81,8 +81,8 @@ def run():
     logger.info(f"Retrieved {len(recent_posts)} recent posts from Sheets")
 
     # --- Select topic + format ---
-    topic, format_type = selector.select(recent_posts)
-    logger.info(f"Selected → topic: '{topic[:60]}' | format: {format_type}")
+    topic, format_type, emotion = selector.select(recent_posts)
+    logger.info(f"Selected → topic: '{topic[:60]}' | format: {format_type} | emotion: {emotion}")
 
     # --- Generate + evaluate loop ---
     import datetime
@@ -95,7 +95,7 @@ def run():
 
         # Generate
         try:
-            post_content = generator.generate(topic, format_type)
+            post_content = generator.generate(topic, format_type, emotion)
             logger.info(f"Generated {len(post_content.split())} words")
             logger.debug(f"Content preview: {post_content[:120]}…")
         except Exception as e:

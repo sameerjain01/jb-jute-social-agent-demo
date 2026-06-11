@@ -1,108 +1,202 @@
 topics:
-  # --- Student-focused ---
+  # ── NOSTALGIA & CHILDHOOD COMFORT ─────────────────────────────────────
   - id: T01
     name: "The best pastry + coffee combo under $6 for a college morning"
     category: pitch
+    emotion: comfort
     hook: "Students have a budget. We worked backwards from it."
 
   - id: T02
-    name: "Why a warm croissant at 8am beats the dining hall every time"
+    name: "Why a warm croissant at 8am changes the whole day"
     category: educate
-    hook: "It's not about the pastry — it's about how you start the day"
+    emotion: comfort
+    hook: "It is not about the pastry. It is about how you start."
 
   - id: T03
-    name: "Study fuel: what students actually want from their bakery stop"
+    name: "The smell of vanilla at 6am — what happens before the bakery opens"
     category: educate
-    hook: "We asked. The answers changed our daily menu."
+    emotion: nostalgia
+    hook: "Vanilla, butter, and yeast at 5am. Here is what that actually looks like."
 
   - id: T04
-    name: "The 'treat yourself' habit — why college students keep coming back"
-    category: pitch
-    hook: "Turns out a $4 muffin on a hard morning is the smartest $4 you'll spend"
-
-  # --- Seasonal: Summer ---
-  - id: T05
-    name: "Fresh blueberry muffins vs frozen: the difference you taste immediately"
+    name: "The muffin that tastes like your grandmother made it — because the recipe is hers"
     category: educate
-    hook: "Fresh blueberries picked this week. Not a mix. Not frozen. Here's why it matters."
+    emotion: nostalgia
+    hook: "Some recipes are worth keeping exactly as they were."
+
+  # ── CELEBRATIONS & BIRTHDAYS ───────────────────────────────────────────
+  - id: T05
+    name: "How to order a birthday cake that actually feels personal"
+    category: cta
+    emotion: celebration
+    hook: "A birthday cake is not a product. It is a message to someone you love."
 
   - id: T06
-    name: "Peach danishes are back — what goes into making them from scratch"
+    name: "Why the birthday cake matters more than the gift"
     category: educate
-    hook: "Stone fruit season lasts 6 weeks. We pack all of it into every bite."
+    emotion: celebration
+    hook: "Blowing out candles is a ritual. The cake is the centrepiece of that moment."
 
-  # --- Seasonal: Fall ---
   - id: T07
-    name: "Pumpkin spice rolls: what separates ours from the chain version"
-    category: educate
-    hook: "We start with a real pumpkin. Not a flavouring. Here's what that actually looks like."
+    name: "Custom birthday cakes — what is possible and how far in advance to order"
+    category: cta
+    emotion: celebration
+    hook: "School colors, favorite cartoon, first initial in flowers — here is what we can do."
 
+  # ── GRADUATIONS & ACHIEVEMENTS ─────────────────────────────────────────
   - id: T08
-    name: "Apple cinnamon turnovers — why fall is our favourite season to bake"
-    category: educate
-    hook: "The orchard down the road delivers Tuesdays. We bake Wednesdays."
+    name: "Graduation season: why a custom cake marks the moment better than a card"
+    category: pitch
+    emotion: pride
+    hook: "Four years of hard work. It deserves more than a handshake."
 
-  # --- Seasonal: Winter ---
   - id: T09
-    name: "Hot cocoa croissants: the winter item people ask about all year"
-    category: pitch
-    hook: "We only make them from November. That's the point."
+    name: "The end-of-semester treat: how students celebrate when finals are over"
+    category: educate
+    emotion: pride
+    hook: "The first thing people want when the pressure lifts is something sweet."
 
+  # ── GRIEF & COMFORT ────────────────────────────────────────────────────
   - id: T10
-    name: "Spiced ginger cookies: the recipe we've been refining since year one"
+    name: "When words are not enough — why people bring baked goods to grieving families"
     category: educate
-    hook: "Three types of ginger. One small tweak every December."
+    emotion: grief
+    hook: "In almost every culture, food is how we show up for people who are hurting."
 
-  # --- Seasonal: Spring ---
   - id: T11
-    name: "Strawberry shortcake is back — and we use real local strawberries"
-    category: pitch
-    hook: "First week of June. Limited batches. Here's how to get yours."
+    name: "What to bring when someone loses someone — a guide to comfort baking"
+    category: cta
+    emotion: grief
+    hook: "A platter of cookies says 'I am here' when nothing else does."
 
+  # ── WEDDINGS & LOVE ────────────────────────────────────────────────────
   - id: T12
-    name: "Lemon tarts: the most technically demanding thing we make all year"
+    name: "Wedding cake consultations — what the process actually looks like"
     category: educate
-    hook: "The curd has to be right. The shell has to be right. At the same time."
+    emotion: love
+    hook: "Cutting the cake together is the couple's first act as a team. It should mean something."
 
-  # --- Premium pastries ---
   - id: T13
-    name: "Why our almond croissants have a 3-hour wait some mornings"
+    name: "Why couples choose flavors that tell their story for their wedding cake"
     category: educate
-    hook: "We make 24. When they're gone, they're gone. Here's what goes into each one."
+    emotion: love
+    hook: "Lemon because they met in summer. Almond because her grandmother always used it."
 
   - id: T14
-    name: "What goes into a layered celebration cake — and why it takes a full day"
-    category: educate
-    hook: "Six layers. Three fillings. One day of work. No shortcuts."
+    name: "Anniversary treats: how to mark a year (or twenty) with something sweet"
+    category: cta
+    emotion: love
+    hook: "You do not need a big gesture. You need the right one."
 
+  # ── APOLOGY & FORGIVENESS ──────────────────────────────────────────────
   - id: T15
-    name: "French-style fruit tarts: the pastry you won't find at a chain"
-    category: pitch
-    hook: "Pastry cream, seasonal fruit, a shell that actually holds. You have to make it yourself."
-
-  - id: T16
-    name: "Chocolate ganache éclairs: why we only make them twice a week"
+    name: "The pastry box as a peace offering — why it works when words do not"
     category: educate
-    hook: "They don't keep. So we don't make them in advance. That's the whole idea."
+    emotion: apology
+    hook: "Bringing someone their favorite pastry says: I know you, I am sorry, and I tried."
 
-  # --- Gifting ---
+  # ── SEASONAL & FRESH ───────────────────────────────────────────────────
+  - id: T16
+    name: "Fresh blueberry muffins vs frozen: the difference you taste immediately"
+    category: educate
+    emotion: wonder
+    hook: "Fresh blueberries picked this week. Not a mix. Not frozen."
+
   - id: T17
-    name: "The pastry gift box: why it beats flowers for almost any occasion"
-    category: pitch
-    hook: "Flowers are gone in a week. A box of fresh pastries is gone in 20 minutes — and people remember it."
+    name: "Pumpkin spice rolls: what separates ours from the chain version"
+    category: educate
+    emotion: nostalgia
+    hook: "We start with a real pumpkin. Not a flavouring."
 
   - id: T18
-    name: "Graduation season: why you should pre-order your custom cake now"
-    category: cta
-    hook: "May fills up by April. We take 8 custom orders per week. That's it."
+    name: "Hot cocoa croissants — the winter item people ask about all year"
+    category: pitch
+    emotion: comfort
+    hook: "We only make them from November. That is the point."
 
-  # --- Behind the scenes ---
   - id: T19
+    name: "Strawberry shortcake is back — and we use real local strawberries"
+    category: pitch
+    emotion: celebration
+    hook: "First week of June. Limited batches."
+
+  # ── COMMUNITY & WONDER ─────────────────────────────────────────────────
+  - id: T20
     name: "4am: what happens before the first customer walks in"
     category: educate
-    hook: "The oven goes on at 4. Doors open at 7. Here's what happens in between."
+    emotion: wonder
+    hook: "The oven goes on at 4. Doors open at 7. Here is what happens in between."
 
-  - id: T20
-    name: "Artisan vs. mass-produced: the numbers that change how you think about your morning pastry"
+  - id: T21
+    name: "Why a neighborhood bakery is the closest thing to a third place most people have"
     category: educate
-    hook: "Chain bakeries bake once a day in a factory. We bake in three shifts. The difference is measurable."
+    emotion: community
+    hook: "You know the baker's name. She knows your order. That is rare now."
+
+  - id: T22
+    name: "The gift box that works for every occasion — birthday, thank you, new baby, I'm sorry"
+    category: cta
+    emotion: celebration
+    hook: "One box. Six pastries. The right message for almost any moment."
+
+  - id: T23
+    name: "New baby, new family — why a pastry box is the right thing to bring"
+    category: pitch
+    emotion: love
+    hook: "The family is exhausted. They cannot cook. Bring them something warm."
+
+  - id: T24
+    name: "Why looking through a glass pastry case feels like being a child again"
+    category: educate
+    emotion: wonder
+    hook: "The pastry case was the toy shop window of a different era. It still works on adults."
+
+  # ── MILITARY & SERVICE ─────────────────────────────────────────────────
+  - id: T25
+    name: "Baking cookies for a deployed soldier — why it matters more than you think"
+    category: educate
+    emotion: military
+    hook: "A vacuum-sealed tin of cookies can cross 6,000 miles and still taste like home."
+
+  - id: T26
+    name: "The care package box — what to bake for someone far from home"
+    category: cta
+    emotion: military
+    hook: "Biscotti, shortbread, and a note. It fits in a flat-rate box and it lands like a hug."
+
+  - id: T27
+    name: "Military retirement cakes — marking 20 years of service with something worthy of it"
+    category: pitch
+    emotion: military
+    hook: "Twenty years earns more than a handshake. It earns something made just for them."
+
+  - id: T28
+    name: "When a family member comes home — the welcome-back moment a bakery can help you create"
+    category: pitch
+    emotion: military
+    hook: "The first thing a returning soldier wants is the food that smells like home."
+
+  # ── 4TH OF JULY & AMERICANA ────────────────────────────────────────────
+  - id: T29
+    name: "The American flag sheet cake — why it shows up at every 4th of July table"
+    category: educate
+    emotion: americana
+    hook: "Strawberries, blueberries, and cream. It is one of the most photographed cakes in America every July."
+
+  - id: T30
+    name: "4th of July orders — how to get your patriotic cake before we sell out"
+    category: cta
+    emotion: americana
+    hook: "We take 12 custom July 4th orders. Last year we were full by June 20th."
+
+  - id: T31
+    name: "Apple pie, cherry tarts, and s'mores — the Americana flavors of summer"
+    category: educate
+    emotion: americana
+    hook: "Every one of these tastes like a childhood July 4th. There is a reason for that."
+
+  - id: T32
+    name: "Honoring a veteran at your July 4th celebration — how bakeries help families do it right"
+    category: educate
+    emotion: americana
+    hook: "Where military pride and Independence Day meet at the same table."
