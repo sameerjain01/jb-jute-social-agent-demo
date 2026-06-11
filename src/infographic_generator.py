@@ -16,37 +16,97 @@ from pathlib import Path
 logger = logging.getLogger(__name__)
 
 THEME_CONFIG = {
-    "spring": {
-        "label":      "SPRING",
-        "tagline":    "Chain stores sell packaged memories.\nWe bake the real thing every morning.",
+    "july4": {
+        "label":      "JULY 4TH",
+        "tagline":    "Any chain can sell a cookie.\nWe make the flag cake your block party remembers.",
+        "bad_emoji":  "🏪",
+        "good_emoji": "🎆",
+        "bg_prompt":  "happy american family big smiles backyard july 4th barbecue flag cake red white blue bokeh summer celebration patriotic joy",
+    },
+    "veterans": {
+        "label":      "VETERANS DAY",
+        "tagline":    "Some care packages come from warehouses.\nOurs are baked with a soldier in mind.",
+        "bad_emoji":  "📦",
+        "good_emoji": "🎖️",
+        "bg_prompt":  "proud military veteran in uniform big warm smile family hugging homecoming emotional bokeh american flag soft light grateful",
+    },
+    "christmas": {
+        "label":      "CHRISTMAS",
+        "tagline":    "Store-bought cookies sit on shelves for months.\nOurs are gone before the carols end.",
         "bad_emoji":  "🏭",
-        "good_emoji": "🌸",
-        "bg_prompt":  "cute anime little girl big googly eyes wide smile holding a strawberry shortcake, bakery background spring flowers pink soft bokeh, warm pastel colors",
+        "good_emoji": "🎄",
+        "bg_prompt":  "happy children big googly eyes wide smiles decorating christmas cookies together warm cozy kitchen bokeh festive holiday lights family joy",
     },
     "summer": {
         "label":      "SUMMER",
-        "tagline":    "Frozen muffins from a factory floor.\nThe kind grandma made — ours come close.",
-        "bad_emoji":  "📦",
-        "good_emoji": "👵",
-        "bg_prompt":  "happy smiling baby with big eyes holding a blueberry muffin, soft warm bakery background bokeh, joyful adorable, pastel tones",
+        "tagline":    "Gas station snacks are for the road.\nWe are for the destination.",
+        "bad_emoji":  "🛒",
+        "good_emoji": "☀️",
+        "bg_prompt":  "happy smiling children big eyes summer vacation picnic fresh baked treats warm golden sunlight bokeh joyful family beach blanket",
     },
-    "fall": {
-        "label":      "AUTUMN",
-        "tagline":    "Supermarkets sell pumpkin flavouring.\nWe sell the smell that fills your kitchen.",
+    "birthday": {
+        "label":      "BIRTHDAY",
+        "tagline":    "A grocery store cake says you forgot.\nOurs says you planned for this moment.",
+        "bad_emoji":  "🏪",
+        "good_emoji": "🎂",
+        "bg_prompt":  "cute child big round eyes wide smile blowing out birthday candles beautiful custom cake colorful bokeh celebration family joy adorable",
+    },
+    "graduation": {
+        "label":      "GRADUATION",
+        "tagline":    "Four years of hard work.\nDeserves more than a sheet cake from a box.",
+        "bad_emoji":  "📦",
+        "good_emoji": "🎓",
+        "bg_prompt":  "proud graduate big smile cap and gown family hugging custom graduation cake celebration warm bokeh achievement emotional proud parents",
+    },
+    "firstcar": {
+        "label":      "FIRST CAR",
+        "tagline":    "First keys. First freedom.\nCelebrate with something worth remembering.",
+        "bad_emoji":  "🏭",
+        "good_emoji": "🚗",
+        "bg_prompt":  "excited teenager big eyes wide smile holding car keys happy parents celebrating bakery gift box surprise bokeh warm joyful milestone",
+    },
+    "newhome": {
+        "label":      "NEW HOME",
+        "tagline":    "Moving boxes empty fast.\nA warm pastry box makes a house feel like home.",
         "bad_emoji":  "🛒",
         "good_emoji": "🏡",
-        "bg_prompt":  "cute anime little girl big round eyes happy holding pumpkin spice roll, cozy autumn bakery window warm orange bokeh, kawaii style",
+        "bg_prompt":  "happy family smiling new home front door housewarming gift bakery box warm soft bokeh joyful new beginning husband wife children",
     },
-    "winter": {
-        "label":      "WINTER",
-        "tagline":    "Chain cookies taste like nothing at all.\nEach bite here takes you somewhere warm.",
+    "wedding": {
+        "label":      "WEDDING",
+        "tagline":    "A wedding cake is not a product.\nIt is the first thing you share as one.",
+        "bad_emoji":  "📦",
+        "good_emoji": "💍",
+        "bg_prompt":  "beautiful bride and groom big smiles cutting wedding cake elegant romantic bokeh floral white gold warm light love celebration",
+    },
+    "newbaby": {
+        "label":      "NEW BABY",
+        "tagline":    "A new life calls for something sweet.\nNot a frozen pastry from a shelf.",
         "bad_emoji":  "🏪",
+        "good_emoji": "👶",
+        "bg_prompt":  "adorable newborn baby big eyes tiny smile happy parents holding infant warm soft pastel light bakery gift box bokeh pink blue joy",
+    },
+    "anniversary": {
+        "label":      "ANNIVERSARY",
+        "tagline":    "Every year together deserves a ritual.\nMake this one sweet.",
+        "bad_emoji":  "🏭",
         "good_emoji": "❤️",
-        "bg_prompt":  "happy smiling family mother and child big smiles decorating gingerbread cookies together warm kitchen bokeh, joyful festive holiday, soft warm light",
+        "bg_prompt":  "happy couple big smiles anniversary sharing cake warm romantic bokeh golden light love celebration elegant restaurant candles",
+    },
+    "milestone": {
+        "label":      "MILESTONE",
+        "tagline":    "Not every win has a name.\nAll of them deserve to be celebrated.",
+        "bad_emoji":  "🛒",
+        "good_emoji": "⭐",
+        "bg_prompt":  "happy family big smiles celebrating life achievement custom cake confetti warm bokeh joyful success proud moment children laughing",
     },
 }
 
-THEME_ORDER  = ["spring", "summer", "fall", "winter"]
+THEME_ORDER = [
+    "birthday", "july4", "christmas", "graduation",
+    "wedding", "newbaby", "summer", "anniversary",
+    "veterans", "newhome", "firstcar", "milestone",
+]
 TEMPLATE_PATH = Path(__file__).parent / "infographic_template.html"
 POLLINATIONS  = "https://image.pollinations.ai/prompt/{}?width=1080&height=420&nologo=true&seed=42"
 

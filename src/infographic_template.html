@@ -7,52 +7,62 @@
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
-  body { width: 1080px; height: 1080px; overflow: hidden; }
+  html, body {
+    width: 1080px;
+    height: 1080px;
+    overflow: hidden;
+  }
 
-  /* ── HERO: food photo background ── */
+  /* ── Outer wrapper fills exactly 1080×1080 ── */
+  .wrap {
+    width: 1080px;
+    height: 1080px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  /* ── HERO: food photo ── */
   .hero {
     width: 1080px;
-    height: 400px;
+    height: 360px;
+    flex-shrink: 0;
     background: {{BG_CSS}};
     background-size: cover;
-    background-position: center;
+    background-position: center top;
     position: relative;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
-    padding: 0 0 18px;
+    padding-bottom: 20px;
   }
-  /* gradient overlay so text is always readable */
   .hero::before {
     content: "";
     position: absolute;
     inset: 0;
     background: linear-gradient(
       to bottom,
-      rgba(20,8,4,0.35) 0%,
-      rgba(20,8,4,0.55) 55%,
-      rgba(20,8,4,0.82) 100%
+      rgba(15,5,2,0.25) 0%,
+      rgba(15,5,2,0.5)  45%,
+      rgba(15,5,2,0.85) 100%
     );
   }
-
   .hero-inner {
     position: relative;
     z-index: 2;
-    padding: 0 40px;
+    padding: 0 38px;
   }
-
-  /* header row inside hero */
   .header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 12px;
+    margin-bottom: 10px;
   }
   .brand-name {
     font-family: 'Playfair Display', 'Palatino Linotype', serif;
-    font-size: 36px;
+    font-size: 34px;
     font-weight: 900;
-    color: #ffffff;
+    color: #fff;
     letter-spacing: -0.3px;
   }
   .brand-name em { font-style: italic; color: #ffb3c1; }
@@ -60,87 +70,85 @@
     background: #c0334d;
     color: #fff;
     font-family: 'Inter', sans-serif;
-    font-size: 11px;
+    font-size: 10px;
     font-weight: 800;
     letter-spacing: 2.5px;
     text-transform: uppercase;
-    padding: 7px 18px;
+    padding: 6px 16px;
     border-radius: 30px;
   }
-
-  /* tagline */
   .tagline-line {
     font-family: 'Inter', sans-serif;
-    font-size: 18px;
+    font-size: 17px;
     font-weight: 500;
-    color: rgba(255,255,255,0.82);
+    color: rgba(255,255,255,0.8);
     line-height: 1.5;
   }
-
-  /* stat */
   .stat-row {
     display: flex;
     align-items: baseline;
-    gap: 14px;
-    margin-top: 10px;
+    gap: 12px;
+    margin-top: 8px;
   }
   .stat-number {
     font-family: 'Playfair Display', 'Palatino Linotype', serif;
-    font-size: 96px;
+    font-size: 88px;
     font-weight: 900;
-    color: #ffffff;
+    color: #fff;
     line-height: 1;
     letter-spacing: -3px;
   }
-  .stat-number.long { font-size: 68px; }
-  .stat-right { display: flex; flex-direction: column; justify-content: center; }
+  .stat-number.long { font-size: 64px; }
   .stat-desc {
     font-family: 'Inter', sans-serif;
-    font-size: 16px;
+    font-size: 15px;
     font-weight: 600;
-    color: rgba(255,255,255,0.72);
-    max-width: 280px;
-    line-height: 1.4;
+    color: rgba(255,255,255,0.65);
+    max-width: 260px;
+    line-height: 1.35;
   }
-  .accent-dot {
-    width: 8px; height: 8px;
+  .stat-dot {
+    width: 7px; height: 7px;
     border-radius: 50%;
     background: #ffb3c1;
-    margin-bottom: 6px;
+    margin-bottom: 5px;
+    flex-shrink: 0;
   }
 
-  /* ── BODY: cream area ── */
+  /* ── BODY: fills remaining 720px ── */
   .body {
-    width: 1080px;
+    flex: 1;
     background: #fdf6ee;
-    padding: 16px 18px 0;
     display: flex;
     flex-direction: column;
+    padding: 14px 16px 0;
+    overflow: hidden;
   }
 
-  /* split panels */
+  /* panels fill all available space */
   .panels {
+    flex: 1;
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 12px;
-    flex: 1;
+    min-height: 0;
   }
   .panel {
-    border-radius: 20px;
-    padding: 18px 20px 16px;
+    border-radius: 18px;
+    padding: 16px 18px 14px;
     display: flex;
     flex-direction: column;
+    overflow: hidden;
   }
   .panel-bad {
-    background: #f0ece7;
+    background: #eeebe6;
     border: 1px solid rgba(0,0,0,0.06);
   }
   .panel-good {
-    background: linear-gradient(155deg, #fff0f4 0%, #fce4ec 100%);
-    border: 1px solid rgba(192,51,77,0.14);
-    box-shadow: 0 2px 16px rgba(192,51,77,0.08);
+    background: linear-gradient(150deg, #fff0f4 0%, #fce4ec 100%);
+    border: 1px solid rgba(192,51,77,0.15);
+    box-shadow: 0 2px 14px rgba(192,51,77,0.08);
   }
-
   .panel-title {
     font-family: 'Inter', sans-serif;
     font-size: 10px;
@@ -149,64 +157,65 @@
     text-transform: uppercase;
     text-align: center;
     margin-bottom: 8px;
+    flex-shrink: 0;
   }
-  .panel-bad  .panel-title { color: #a09488; }
+  .panel-bad  .panel-title { color: #9e9088; }
   .panel-good .panel-title { color: #c0334d; }
-
   .emoji-row {
     text-align: center;
-    font-size: 72px;
+    font-size: 64px;
     line-height: 1;
-    margin-bottom: 12px;
+    margin-bottom: 10px;
+    flex-shrink: 0;
   }
-
-  .points { display: flex; flex-direction: column; gap: 8px; }
+  .points { display: flex; flex-direction: column; gap: 8px; flex: 1; }
   .point {
     display: flex;
     align-items: flex-start;
     gap: 8px;
     font-family: 'Inter', sans-serif;
-    font-size: 15.5px;
+    font-size: 15px;
     font-weight: 500;
     line-height: 1.38;
   }
-  .icon { flex-shrink: 0; font-style: normal; font-size: 13px; margin-top: 3px; font-weight: 800; }
+  .icon { flex-shrink: 0; font-style: normal; font-size: 12px; margin-top: 3px; font-weight: 800; }
   .panel-bad  .point { color: #7a6e66; }
-  .panel-bad  .icon  { color: #b0a49a; }
+  .panel-bad  .icon  { color: #aaa09a; }
   .panel-good .point { color: #3d1520; }
   .panel-good .icon  { color: #c0334d; }
 
-  /* ── CTA bar ── */
+  /* ── CTA ── */
   .cta-bar {
-    background: linear-gradient(90deg, #b02d45 0%, #c0334d 50%, #b02d45 100%);
+    flex-shrink: 0;
+    background: linear-gradient(90deg, #a82a41 0%, #c0334d 50%, #a82a41 100%);
     text-align: center;
-    padding: 13px 40px;
-    margin-top: 14px;
+    padding: 12px 40px;
+    margin-top: 12px;
   }
   .cta-text {
     font-family: 'Playfair Display', 'Palatino Linotype', serif;
-    font-size: 27px;
+    font-size: 26px;
     font-weight: 700;
     font-style: italic;
     color: #fff;
-    letter-spacing: 0.2px;
   }
 
   /* ── Footer ── */
   .footer {
+    flex-shrink: 0;
     background: #1e0a06;
-    padding: 11px 40px;
+    padding: 11px 38px;
     display: flex;
     justify-content: space-between;
     align-items: center;
   }
-  .footer-url  { font-family: 'Inter', sans-serif; font-size: 15px; font-weight: 700; color: #c68c3a; }
-  .footer-tags { font-family: 'Inter', sans-serif; font-size: 12px; color: rgba(253,246,238,0.4); }
+  .footer-url  { font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 700; color: #c68c3a; }
+  .footer-tags { font-family: 'Inter', sans-serif; font-size: 11.5px; color: rgba(253,246,238,0.38); }
 </style>
 </head>
 <body>
+<div class="wrap">
 
-  <!-- HERO -->
   <div class="hero">
     <div class="hero-inner">
       <div class="header">
@@ -217,15 +226,14 @@
       <div class="tagline-line">{{TAGLINE_LINE2}}</div>
       <div class="stat-row">
         <div class="stat-number {{STAT_CLASS}}">{{STAT}}</div>
-        <div class="stat-right">
-          <div class="accent-dot"></div>
+        <div style="display:flex;flex-direction:column;justify-content:center;gap:0">
+          <div class="stat-dot"></div>
           <div class="stat-desc">{{STAT_DESC}}</div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- BODY -->
   <div class="body">
     <div class="panels">
       <div class="panel panel-bad">
@@ -258,5 +266,6 @@
     </div>
   </div>
 
+</div>
 </body>
 </html>
