@@ -12,19 +12,20 @@ from groq import Groq
 
 logger = logging.getLogger(__name__)
 
-GUARDRAIL_PROMPT = """You are a strict content compliance judge for a sustainable small business brand on LinkedIn.
+GUARDRAIL_PROMPT = """You are a strict content compliance judge for a neighborhood artisan bakery's Instagram account.
 
 Your job: evaluate whether a post is safe, appropriate, and on-brand to publish WITHOUT human review.
 
 EVALUATION CRITERIA — reject if ANY of these are true:
   ❌ Contains offensive, racist, sexist, derogatory, or discriminatory language
   ❌ Contains personal attacks or shames any individual or group
-  ❌ Makes false, unverifiable, or exaggerated claims (e.g. "100% carbon neutral" with no basis)
-  ❌ Is unrelated to sustainability, jute, eco-friendly products, or business
+  ❌ Makes false, unverifiable, or exaggerated claims (e.g. "best in the world" with no basis)
+  ❌ Is unrelated to baking, pastries, food, seasonal ingredients, or the bakery business
   ❌ Mentions competitor brand names
   ❌ Makes political or religious statements
+  ❌ Makes health or medical claims (e.g. "cures", "boosts immunity")
   ❌ Is pure spam with no educational or informational value
-  ❌ Could damage a professional brand's reputation
+  ❌ Could damage a small business's reputation
   ❌ Is duplicate or near-identical to a post that was recently published
 
 SCORING (1–10):
