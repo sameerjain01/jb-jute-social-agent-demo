@@ -101,6 +101,12 @@ Say:
 **"Can we change the topics or the brand voice?"**
 > "Yes — topics and brand voice are a simple text list. No coding. Swap the bakery name, the product list, the seasonal specials — change the list, save it, live on the next run."
 
+**"Can we change what the infographic looks like?"**
+> "Yes — same idea as the content. The infographic design is an HTML file with standard CSS styling. Change the colors, fonts, layout, or logo — no coding needed if you know basic web design. For clients who want full creative control, we can connect it to Canva so every image is generated inside their existing Canva brand kit. The content pipeline stays the same — only the image renderer changes."
+
+**"What if we already use Canva for everything?"**
+> "Then we plug the AI output directly into Canva. The system generates the text and data, Canva produces the image in your exact brand style. You get automation without giving up creative control."
+
 **"What if it fails one day?"**
 > "It skips that day. Nothing bad goes out. The failure shows as a red mark in GitHub so someone can check. It doesn't retry bad content — it waits for the next scheduled run."
 
