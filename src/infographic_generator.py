@@ -1,13 +1,16 @@
 """
 infographic_generator.py
 ------------------------
-Renders a 1080x1080 infographic PNG using Playwright (HTML → screenshot).
-Google Fonts, CSS gradients, proper typography — no more Pillow.
-Seasonal themes tied to family memory and emotional moments.
+Renders a 1080x1080 PNG using Playwright (HTML → screenshot).
+Hero background fetched from Pollinations.ai (free, no key needed).
+Falls back to CSS gradient if image fetch fails.
 """
 
+import base64
 import logging
 import os
+import urllib.parse
+import urllib.request
 from pathlib import Path
 
 logger = logging.getLogger(__name__)
@@ -18,30 +21,34 @@ THEME_CONFIG = {
         "tagline":    "Chain stores sell packaged memories.\nWe bake the real thing every morning.",
         "bad_emoji":  "🏭",
         "good_emoji": "🌸",
+        "bg_prompt":  "cute anime little girl big googly eyes wide smile holding a strawberry shortcake, bakery background spring flowers pink soft bokeh, warm pastel colors",
     },
     "summer": {
         "label":      "SUMMER",
         "tagline":    "Frozen muffins from a factory floor.\nThe kind grandma made — ours come close.",
         "bad_emoji":  "📦",
         "good_emoji": "👵",
+        "bg_prompt":  "happy smiling baby with big eyes holding a blueberry muffin, soft warm bakery background bokeh, joyful adorable, pastel tones",
     },
     "fall": {
         "label":      "AUTUMN",
         "tagline":    "Supermarkets sell pumpkin flavouring.\nWe sell the smell that fills your kitchen.",
         "bad_emoji":  "🛒",
         "good_emoji": "🏡",
+        "bg_prompt":  "cute anime little girl big round eyes happy holding pumpkin spice roll, cozy autumn bakery window warm orange bokeh, kawaii style",
     },
     "winter": {
         "label":      "WINTER",
         "tagline":    "Chain cookies taste like nothing at all.\nEach bite here takes you somewhere warm.",
         "bad_emoji":  "🏪",
         "good_emoji": "❤️",
+        "bg_prompt":  "happy smiling family mother and child big smiles decorating gingerbread cookies together warm kitchen bokeh, joyful festive holiday, soft warm light",
     },
 }
 
-THEME_ORDER = ["spring", "summer", "fall", "winter"]
-
+THEME_ORDER  = ["spring", "summer", "fall", "winter"]
 TEMPLATE_PATH = Path(__file__).parent / "infographic_template.html"
+POLLINATIONS  = "https://image.pollinations.ai/prompt/{}?width=1080&height=420&nologo=true&seed=42"
 
 
 def next_theme(post_count: int) -> str:
@@ -60,14 +67,35 @@ def _escape(text: str) -> str:
             .replace('"', "&quot;"))
 
 
+def _fetch_bg(prompt: str) -> str:
+    """Returns a base64 data URL, or empty string on failure."""
+    try:
+        url = POLLINATIONS.format(urllib.parse.quote(prompt))
+        req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
+        with urllib.request.urlopen(req, timeout=30) as r:
+            data = r.read()
+        b64 = base64.b64encode(data).decode()
+        mime = "image/jpeg"
+        return f"data:{mime};base64,{b64}"
+    except Exception as e:
+        logger.warning(f"Background fetch failed: {e}")
+        return ""
+
+
 class InfographicGenerator:
 
     def __init__(self, output_dir="/tmp"):
         self.output_dir = output_dir
 
     def generate(self, data: dict, run_id: str) -> str:
-        theme  = data.get("theme", "summer")
-        tcfg   = THEME_CONFIG.get(theme, THEME_CONFIG["summer"])
+        theme = data.get("theme", "summer")
+        tcfg  = THEME_CONFIG.get(theme, THEME_CONFIG["summer"])
+
+        logger.info(f"Fetching background image for theme: {theme}")
+        bg_data_url = _fetch_bg(tcfg["bg_prompt"])
+        bg_css = f"url('{bg_data_url}')" if bg_data_url else (
+            "linear-gradient(160deg, #c0334d 0%, #8b1a2e 100%)"
+        )
 
         tagline_parts = (data.get("tagline") or tcfg["tagline"]).split("\n", 1)
         tagline_line1 = tagline_parts[0] if len(tagline_parts) > 0 else ""
@@ -79,6 +107,7 @@ class InfographicGenerator:
         html = TEMPLATE_PATH.read_text(encoding="utf-8")
 
         replacements = {
+            "{{BG_CSS}}":        bg_css,
             "{{SEASON}}":        _escape(tcfg["label"]),
             "{{TAGLINE_LINE1}}": _escape(tagline_line1),
             "{{TAGLINE_LINE2}}": _escape(tagline_line2),
@@ -106,8 +135,8 @@ class InfographicGenerator:
 
         output_path = os.path.join(self.output_dir, f"{run_id}_infographic.png")
         self._screenshot(html_path, output_path)
-
         os.remove(html_path)
+
         logger.info(f"Infographic saved: {output_path}")
         return output_path
 
@@ -118,5 +147,6 @@ class InfographicGenerator:
             page = browser.new_page(viewport={"width": 1080, "height": 1080})
             page.goto(f"file://{os.path.abspath(html_path)}")
             page.wait_for_load_state("networkidle")
+            page.wait_for_timeout(1500)   # let fonts finish rendering
             page.screenshot(path=output_path, clip={"x": 0, "y": 0, "width": 1080, "height": 1080})
             browser.close()
