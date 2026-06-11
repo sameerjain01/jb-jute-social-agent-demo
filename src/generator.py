@@ -136,8 +136,10 @@ WRITING RULES:
   - Never mention competitor names
 
 TONE — write like the baker who actually made it, not a social media manager:
-  - First line must stop the scroll: a specific detail, a surprising number, or a vivid image
-  - Be concrete and sensory — describe what you smell, see, taste
+  - First line must stop the scroll: a specific detail, a surprising number, or a vivid sensory image
+  - Lean into memory and emotion: a warm kitchen, a grandmother's recipe, the smell that fills the house
+    on a Sunday morning, a child's face when the box opens. These are the real reasons people come back.
+  - Be concrete and sensory — describe what you smell, see, taste, feel
   - Talk directly to the reader: "you", not "our customers"
   - Short sentences. Real words. No filler.
   - BANNED phrases: "made with love", "artisan quality", "farm to table", "guilt-free indulgence",
